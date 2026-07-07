@@ -1,0 +1,30 @@
+  <!-- ═══════════════════════════════
+       Lọc danh mục + Sort
+       ═══════════════════════════════ -->
+  <div class="layout">
+    <div>
+      <div class="sec-head animate-in"><span class="sec-title">Danh mục</span></div>
+
+      <!-- Pills danh mục -->
+      <div class="cat-row animate-in" id="cat-row">
+        <div class="cat-pill active" data-cat="all"         onclick="filterCat('all',this)"><img src="images/category/all.png" alt="Tất cả"> Tất cả</div>
+        <div class="cat-pill"        data-cat="pho"         onclick="filterCat('pho',this)"><img src="images/category/pho.png" alt="Phở"> Phở &amp; Bún</div>
+        <div class="cat-pill"        data-cat="com"         onclick="filterCat('com',this)"><img src="images/category/com.png" alt="Cơm"> Cơm</div>
+        <div class="cat-pill"        data-cat="banh"        onclick="filterCat('banh',this)"><img src="images/category/banh.png" alt="Bánh"> Bánh</div>
+        <div class="cat-pill"        data-cat="nuoc"        onclick="filterCat('nuoc',this)"><img src="images/category/nuoc.png" alt="Đồ uống"> Đồ uống</div>
+        <div class="cat-pill"        data-cat="trangmieng"  onclick="filterCat('trangmieng',this)"><img src="images/category/trangmieng.png" alt="Tráng miệng"> Tráng miệng</div>
+        <div class="cat-pill"        data-cat="khuyen-mai"  onclick="filterCat('khuyen-mai',this)"><img src="images/category/khuyenmai.png" alt="Khuyến mãi"> Khuyến mãi</div>
+      </div>
+
+      <!-- Hàng sort + số kết quả -->
+      <div class="sort-row animate-in">
+        <span id="result-count">Đang tải…</span>
+        <select class="sort-select" onchange="sortMenu(this.value)">
+          <option value="default">Mặc định</option>
+          <option value="price-asc">Giá: Thấp → Cao</option>
+          <option value="price-desc">Giá: Cao → Thấp</option>
+          <option value="rating">Đánh giá cao nhất</option>
+          <option value="popular">Phổ biến nhất</option>
+        </select>
+      </div>
+
