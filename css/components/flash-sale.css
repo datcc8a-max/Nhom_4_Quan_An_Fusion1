@@ -1,0 +1,16 @@
+/* ── FLASH SALE STRIP ── */
+.flash-strip{background:linear-gradient(135deg,#DC2626,#EA580C);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;color:#fff;overflow:hidden;position:relative;box-shadow:0 14px 32px rgba(220,38,38,.18)}
+.flash-strip::before{content:'';position:absolute;inset:auto -30px -40px auto;width:140px;height:140px;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%)}
+.flash-strip::after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%}
+.flash-timer{display:flex;gap:6px;align-items:center}
+.timer-block{background:rgba(0,0,0,.25);border-radius:6px;padding:4px 8px;text-align:center}
+.timer-block span{display:block;font-size:18px;font-weight:800;line-height:1}
+.timer-block small{font-size:9px;opacity:.75}
+.timer-sep{font-size:16px;font-weight:800;opacity:.6;margin-top:-4px}
+.flash-deals{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;flex:1}
+.flash-deals::-webkit-scrollbar{display:none}
+.flash-item{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);padding:8px 12px;white-space:nowrap;cursor:pointer;flex-shrink:0;transition:background .15s, transform .15s;backdrop-filter:blur(4px)}
+.flash-item:hover{background:rgba(255,255,255,.22); transform: translateY(-2px);}
+.flash-item-name{font-size:12px;font-weight:600}
+.flash-item-price{font-size:11px;opacity:.8}
+.flash-item-save{font-size:10px;background:rgba(255,255,255,.2);border-radius:4px;padding:1px 5px;margin-top:2px;display:inline-block}
