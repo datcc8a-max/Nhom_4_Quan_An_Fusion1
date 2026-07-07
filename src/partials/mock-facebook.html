@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập Facebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Helvetica, Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: #1c1e21; }
+    .fb-container { width: 100%; max-width: 400px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1); padding: 20px; box-sizing: border-box; text-align: center; }
+    .fb-logo { color: #1877f2; font-size: 40px; font-weight: bold; font-family: 'Klavika', Helvetica, Arial, sans-serif; margin-bottom: 16px; margin-top: 10px; }
+    .fb-title { font-size: 18px; line-height: 22px; margin-bottom: 20px; color: #1c1e21; }
+    .fb-input { width: 100%; padding: 14px 16px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 17px; box-sizing: border-box; outline: none; margin-bottom: 12px; }
+    .fb-input:focus { border-color: #1877f2; box-shadow: 0 0 0 2px #e7f3ff; }
+    .fb-btn { width: 100%; background: #1877f2; color: #fff; border: none; border-radius: 6px; padding: 12px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 6px; margin-bottom: 16px; }
+    .fb-btn:hover { background: #166fe5; }
+    .fb-link { color: #1877f2; font-size: 14px; text-decoration: none; display: block; margin-bottom: 20px; cursor: pointer; }
+    .fb-link:hover { text-decoration: underline; }
+    .fb-divider { border-bottom: 1px solid #dadde1; margin: 20px 0; }
+    .fb-btn-new { background: #42b72a; color: #fff; border: none; border-radius: 6px; padding: 12px 16px; font-size: 17px; font-weight: bold; cursor: pointer; display: inline-block; }
+    .fb-btn-new:hover { background: #36a420; }
+    
+    #step2 { display: none; padding: 10px 0; }
+    .fb-profile { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+    .fb-avatar { width: 60px; height: 60px; border-radius: 50%; background: #ddd; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #555; }
+    .fb-name { font-size: 18px; font-weight: bold; }
+    .fb-app { font-size: 14px; color: #606770; margin-bottom: 30px; text-align: left;}
+  </style>
+</head>
+<body>
+  <div class="fb-container" id="step1">
+    <div class="fb-logo">facebook</div>
+    <div class="fb-title">Đăng nhập vào Facebook để kết nối với Quán ăn Fusion</div>
+    <input type="text" class="fb-input" id="fb-email" placeholder="Email hoặc số điện thoại" value="nguyenvana@gmail.com">
+    <input type="password" class="fb-input" placeholder="Mật khẩu" value="********">
+    <button class="fb-btn" onclick="nextStep()">Đăng nhập</button>
+    <a class="fb-link">Quên tài khoản?</a>
+    <div class="fb-divider"></div>
+    <button class="fb-btn-new">Tạo tài khoản mới</button>
+  </div>
+
+  <div class="fb-container" id="step2">
+    <div class="fb-logo" style="font-size:32px;">facebook</div>
+    <div class="fb-profile">
+      <div class="fb-avatar">👤</div>
+      <div class="fb-name" id="fb-name-display">Người dùng</div>
+    </div>
+    
+    <div class="fb-app">
+      <strong>Quán ăn Fusion đang yêu cầu quyền truy cập:</strong>
+      <ul style="margin-top:10px; color:#1c1e21;">
+        <li>Tên và ảnh đại diện trang cá nhân</li>
+        <li>Địa chỉ email liên hệ</li>
+      </ul>
+    </div>
+
+    <button class="fb-btn" onclick="finishLogin()" id="fb-continue-btn">Tiếp tục dưới tên ...</button>
+    <a class="fb-link" style="color:#606770; cursor:pointer;" onclick="window.close()">Hủy, không kết nối</a>
+  </div>
+
+  <script>
+    let userEmail = "";
+
+    function nextStep() {
+      userEmail = document.getElementById('fb-email').value || 'nguyenvana@gmail.com';
+      let name = userEmail.split('@')[0];
+      
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+      document.getElementById('fb-name-display').textContent = name;
+      document.getElementById('fb-continue-btn').textContent = "Tiếp tục dưới tên " + name;
+    }
+
+    function finishLogin() {
+      // Dùng localStorage để truyền dữ liệu về trang chính (vượt lỗi CORS trên file://)
+      localStorage.setItem('social_login_pending', JSON.stringify({
+        provider: 'Facebook', 
+        email: userEmail
+      }));
+      window.close();
+    }
+  </script>
+</body>
+</html>
+
+
