@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Quán ăn Fusion – Đặt món ăn ngon, giao hàng nhanh tận nơi.">
+<title>Quán ăn Fusion – Đặt Món Online</title>
+
+<!-- ═══════════════════════════════
+     CSS: Base → Layout → Components → Pages → Responsive
+     ═══════════════════════════════ -->
+<!-- Base -->
+<link rel="stylesheet" href="css/base/variables.css">
+<link rel="stylesheet" href="css/base/reset.css">
+<link rel="stylesheet" href="css/base/animations.css">
+<link rel="stylesheet" href="css/base/typography.css">
+<!-- Layout -->
+<link rel="stylesheet" href="css/layout/grid.css">
+<link rel="stylesheet" href="css/layout/header.css">
+<link rel="stylesheet" href="css/layout/navbar.css">
+<link rel="stylesheet" href="css/layout/footer.css">
+<!-- Components -->
+<link rel="stylesheet" href="css/components/hero.css">
+<link rel="stylesheet" href="css/components/category.css">
+<link rel="stylesheet" href="css/components/product-card.css">
+<link rel="stylesheet" href="css/components/search.css">
+<link rel="stylesheet" href="css/components/buttons.css">
+<link rel="stylesheet" href="css/components/modal.css">
+<link rel="stylesheet" href="css/components/support-chat.css">
+<link rel="stylesheet" href="css/components/cart-sidebar.css">
+<link rel="stylesheet" href="css/components/flash-sale.css">
+<link rel="stylesheet" href="css/components/review.css">
+<!-- Pages -->
+<link rel="stylesheet" href="css/pages/home.css">
+<link rel="stylesheet" href="css/pages/profile.css">
+<link rel="stylesheet" href="css/pages/cart-page.css">
+<link rel="stylesheet" href="css/pages/checkout.css">
+<!-- Responsive -->
+<link rel="stylesheet" href="css/responsive/desktop.css">
+<link rel="stylesheet" href="css/responsive/tablet.css">
+<link rel="stylesheet" href="css/responsive/mobile.css">
+
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <!-- Logo -->
+    <a class="logo" href="#" onclick="showPage('menu');return false">
+      <img src="images/logo-fusion.png" alt="Logo" class="logo-icon" style="height: 60px; width: 60px; object-fit: contain; border-radius: 8px;">
+      <div>
+        <span class="logo-name">Quán ăn Fusion</span>
+        <span class="logo-tag">Hà Nội</span>
+      </div>
+    </a>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Tìm phở, cơm, bánh mì…" id="search-input" autocomplete="off">
+    </div>
+
+    <!-- Vị trí giao hàng -->
+    <button class="header-loc" id="header-loc-btn" onclick="requestUserLocation()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span id="header-loc-text">Giao đến tôi</span>
+    </button>
+
+    <!-- Navigation -->
+    <nav>
+      <button class="nav-btn active" id="nav-menu" onclick="showPage('menu')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Thực đơn</span>
+      </button>
+      <button class="nav-btn" id="nav-orders" onclick="showPage('orders')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>Đơn hàng</span>
+      </button>
+      <button class="nav-btn" id="nav-profile" onclick="showPage('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Tài khoản</span>
+      </button>
+      <button class="nav-btn" id="nav-login" onclick="openLoginModal('login')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13 12H3"/></svg>
+        <span>Đăng nhập</span>
+      </button>
+      <button class="nav-btn" id="nav-logout" onclick="openModal('logout-modal')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        <span>Đăng xuất</span>
+      </button>
+      <button class="nav-btn" id="nav-admin" onclick="showPage('admin')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 16h5M8 8h8"/></svg>
+        <span>Admin</span>
+      </button>
+    </nav>
+
+    <!-- Giỏ hàng dropdown -->
+    <div class="cart-drop-wrap">
+      <button class="cart-pill" onclick="toggleCartDropdown()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Giỏ hàng
+        <span class="c-badge" id="cart-count">0</span>
+      </button>
+      <div class="cart-dropdown" id="cart-dropdown">
+        <div class="cart-top">
+          <div class="cart-t">Giỏ hàng của bạn</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="cart-count-tag" id="cart-count-tag">0 món</span>
+            <button class="clear-btn" onclick="clearCart();closeCartDropdown()">Xóa tất cả</button>
+          </div>
+        </div>
+        <div class="cart-body" id="cart-dropdown-body">
+          <div class="cart-empty-state">
+            <img src="images/foods/img_efcf13a5.jpg" alt="Giỏ trống">
+            <p style="font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px">Giỏ hàng đang trống</p>
+            <p>Chọn món ngon và thêm vào đây nhé!</p>
+          </div>
+        </div>
+        <div class="cart-bot" id="cart-dropdown-bot" style="display:none">
+          <textarea class="note-in" rows="2" id="order-note" placeholder="Ghi chú: không ớt, thêm rau, bỏ hành…"></textarea>
+          <div class="promo-wrap">
+            <input class="promo-in" type="text" id="promo-code" placeholder="Mã giảm giá (VD: PHOGIA20)">
+            <button class="promo-go" onclick="applyPromo()">Áp dụng</button>
+          </div>
+          <div class="sum-row"><span>Tạm tính</span><span id="s-sub">0đ</span></div>
+          <div class="sum-row"><span>Phí giao hàng</span><span id="s-ship">15.000đ</span></div>
+          <div class="sum-row disc" id="s-disc-row" style="display:none"><span>Giảm giá 🎉</span><span id="s-disc-amt"></span></div>
+          <div class="sum-row tot"><span>Tổng cộng</span><span id="s-total" style="color:var(--orange)">0đ</span></div>
+          <button class="cko-btn" onclick="closeCartDropdown();openCheckout()" id="cko-btn" style="margin-top:1rem">Đặt hàng ngay →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════
+     TRANG CHỦ: Hero + Flash Sale + Banner danh mục
+     ═══════════════════════════════ -->
+<div id="page-menu" class="page active">
+<div style="max-width:1280px;margin:0 auto;padding:1.5rem 1.5rem 0">
+
+  <!-- Thông báo khuyến mãi -->
+  <div class="notif-banner animate-in" id="promo-banner">
+    🎉 <span>Hôm nay: Miễn phí giao hàng cho đơn từ 150.000đ — Dùng mã <strong>FREESHIP</strong></span>
+    <button class="notif-close" onclick="this.closest('.notif-banner').style.display='none'">×</button>
+  </div>
+
+  <!-- Hero Banner -->
+  <div class="hero animate-in">
+    <div class="hero-bg"><img src="images/foods/img_56392371.jpg" alt="Quán ăn Fusion"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">🏆 Được yêu thích nhất Hà Nội 2025</div>
+      <h1>Ăn ngon<br>mỗi <span>bữa cơm</span></h1>
+      <p class="hero-sub">Hơn 50 món ăn truyền thống, nguyên liệu tươi mỗi ngày.<br>Giao hàng trong 30 phút hoặc hoàn tiền.</p>
+      <div class="hero-cta">
+        <button class="btn-hero" onclick="document.getElementById('menu-grid').scrollIntoView({behavior:'smooth'})">Đặt ngay</button>
+        <button class="btn-hero-out" onclick="showToast('📹 Đang mở video giới thiệu…')">▶ Xem nhà bếp</button>
+      </div>
+    </div>
+    <div class="hero-chips">
+      <div class="hero-chip"><strong>4.9★</strong><small>Đánh giá</small></div>
+      <div class="hero-chip"><strong>30'</strong><small>Giao hàng</small></div>
+      <div class="hero-chip"><strong>10K+</strong><small>Khách hàng</small></div>
+    </div>
+  </div>
+
+  <!-- Thanh thông tin giao hàng -->
+  <div class="deliv-bar animate-in">
+    <div class="deliv-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Thời gian: <strong>30–45 phút</strong>
+    </div>
+    <div class="deliv-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Phí giao: <strong>15.000đ</strong> (Miễn phí từ 150K)
+    </div>
+    <div class="deliv-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Cam kết: <strong>Hoàn tiền nếu chậm</strong>
+    </div>
+    <div class="deliv-item" id="deliv-location-text" style="margin-left:auto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <strong>123 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội</strong>
+      <span style="margin-left:6px;color:var(--muted);font-size:12px">📞 0901 234 567</span>
+    </div>
+  </div>
+
+  <!-- Flash Sale -->
+  <div class="flash-strip animate-in" id="flash-strip">
+    <div>
+      <div style="font-size:13px;font-weight:800;margin-bottom:4px">⚡ FLASH SALE</div>
+      <div class="flash-timer">
+        <div class="timer-block"><span id="t-h">02</span><small>GIỜ</small></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block"><span id="t-m">45</span><small>PHÚT</small></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block"><span id="t-s">30</span><small>GIÂY</small></div>
+      </div>
+    </div>
+    <div class="flash-deals">
+      <div class="flash-item" onclick="openItemById(1)">
+        <div class="flash-item-name">Phở Bò Tái Chín</div>
+        <div class="flash-item-price">75.000đ → <strong>60.000đ</strong></div>
+        <span class="flash-item-save">-20%</span>
+      </div>
+      <div class="flash-item" onclick="openItemById(4)">
+        <div class="flash-item-name">Cơm Tấm Sườn</div>
+        <div class="flash-item-price">80.000đ → <strong>64.000đ</strong></div>
+        <span class="flash-item-save">-20%</span>
+      </div>
+      <div class="flash-item" onclick="openItemById(9)">
+        <div class="flash-item-name">Trà Sữa Trân Châu</div>
+        <div class="flash-item-price">45.000đ → <strong>35.000đ</strong></div>
+        <span class="flash-item-save">-22%</span>
+      </div>
+      <div class="flash-item" onclick="openItemById(7)">
+        <div class="flash-item-name">Bánh Mì Đặc Biệt</div>
+        <div class="flash-item-price">35.000đ → <strong>28.000đ</strong></div>
+        <span class="flash-item-save">-20%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner danh mục -->
+  <div class="banner-strip animate-in" style="margin-bottom:2rem">
+    <div class="banner-card" onclick="filterCatById('pho')">
+      <img src="images/foods/img_ef33d7e3.jpg" alt="Phở & Bún">
+      <div class="banner-card-overlay"><div class="banner-card-text"><strong>Phở &amp; Bún</strong><span>8 món đặc sắc</span></div></div>
+      <div class="banner-tag">Hot</div>
+    </div>
+    <div class="banner-card" onclick="filterCatById('com')">
+      <img src="images/foods/img_d7128823.jpg" alt="Cơm Tấm">
+      <div class="banner-card-overlay"><div class="banner-card-text"><strong>Cơm Tấm</strong><span>5 món đặc biệt</span></div></div>
+      <div class="banner-tag" style="background:var(--green)">New</div>
+    </div>
+    <div class="banner-card" onclick="filterCatById('khuyen-mai')">
+      <img src="images/foods/img_17eb3beb.jpg" alt="Combo">
+      <div class="banner-card-overlay"><div class="banner-card-text"><strong>Combo Tiết Kiệm</strong><span>Giảm đến 30%</span></div></div>
+      <div class="banner-tag" style="background:#DC2626">Sale</div>
+    </div>
+  </div>
+
+</div><!-- /max-width wrapper -->
+
+
+  <!-- ═══════════════════════════════
+       Lọc danh mục + Sort
+       ═══════════════════════════════ -->
+  <div class="layout">
+    <div>
+      <div class="sec-head animate-in"><span class="sec-title">Danh mục</span></div>
+
+      <!-- Pills danh mục -->
+      <div class="cat-row animate-in" id="cat-row">
+        <div class="cat-pill active" data-cat="all"         onclick="filterCat('all',this)"><img src="images/category/all.png" alt="Tất cả"> Tất cả</div>
+        <div class="cat-pill"        data-cat="pho"         onclick="filterCat('pho',this)"><img src="images/category/pho.png" alt="Phở"> Phở &amp; Bún</div>
+        <div class="cat-pill"        data-cat="com"         onclick="filterCat('com',this)"><img src="images/category/com.png" alt="Cơm"> Cơm</div>
+        <div class="cat-pill"        data-cat="banh"        onclick="filterCat('banh',this)"><img src="images/category/banh.png" alt="Bánh"> Bánh</div>
+        <div class="cat-pill"        data-cat="nuoc"        onclick="filterCat('nuoc',this)"><img src="images/category/nuoc.png" alt="Đồ uống"> Đồ uống</div>
+        <div class="cat-pill"        data-cat="trangmieng"  onclick="filterCat('trangmieng',this)"><img src="images/category/trangmieng.png" alt="Tráng miệng"> Tráng miệng</div>
+        <div class="cat-pill"        data-cat="khuyen-mai"  onclick="filterCat('khuyen-mai',this)"><img src="images/category/khuyenmai.png" alt="Khuyến mãi"> Khuyến mãi</div>
+      </div>
+
+      <!-- Hàng sort + số kết quả -->
+      <div class="sort-row animate-in">
+        <span id="result-count">Đang tải…</span>
+        <select class="sort-select" onchange="sortMenu(this.value)">
+          <option value="default">Mặc định</option>
+          <option value="price-asc">Giá: Thấp → Cao</option>
+          <option value="price-desc">Giá: Cao → Thấp</option>
+          <option value="rating">Đánh giá cao nhất</option>
+          <option value="popular">Phổ biến nhất</option>
+        </select>
+      </div>
+
+
+      <!-- Grid sản phẩm (JS render vào đây) -->
+      <div class="menu-grid" id="menu-grid"></div>
+
+      <!-- Gợi ý -->
+      <div style="margin-top:2.5rem" class="animate-in">
+        <div class="sec-head"><span class="sec-title">Có thể bạn thích</span></div>
+        <div class="h-scroll" id="recommended"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-menu -->
+
+
+<!-- ══════════════ PAGE: ORDERS ══════════════ -->
+<div id="page-orders" class="page">
+  <div class="page-wrap">
+    <div id="orders-guest" style="display:block">
+      <div style="text-align:center;padding:3rem 1rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-lg)">
+        <div style="font-size:72px;margin-bottom:1rem">📋</div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:.5rem">Đơn hàng của bạn</h2>
+        <p style="color:var(--muted);margin-bottom:1.5rem">Vui lòng đăng nhập để xem lịch sử và theo dõi đơn hàng</p>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <button class="btn-main" style="max-width:180px" onclick="openLoginModal('login')">Đăng nhập</button>
+          <button class="btn-out" style="max-width:180px" onclick="openLoginModal('register')">Đăng ký</button>
+        </div>
+      </div>
+    </div>
+    <div id="orders-logged" style="display:none">
+      <div class="sec-head" style="margin-bottom:1.5rem"><span class="sec-title">Lịch sử đơn hàng</span></div>
+      <div class="orders-filter">
+        <button class="of-btn active" onclick="filterOrders('all',this)">Tất cả</button>
+        <button class="of-btn" onclick="filterOrders('pending',this)">Đang xử lý</button>
+        <button class="of-btn" onclick="filterOrders('delivering',this)">Đang giao</button>
+        <button class="of-btn" onclick="filterOrders('done',this)">Hoàn thành</button>
+        <button class="of-btn" onclick="filterOrders('cancelled',this)">Đã hủy</button>
+      </div>
+      <div id="orders-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: PROFILE ══════════════ -->
+<div id="page-profile" class="page">
+  <div class="page-wrap" style="max-width:700px">
+    <div id="profile-guest">
+      <div style="text-align:center;padding:3rem 1rem">
+        <div style="font-size:72px;margin-bottom:1rem">👤</div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:.5rem">Chào mừng bạn!</h2>
+        <p style="color:var(--muted);margin-bottom:1.5rem">Đăng nhập để theo dõi đơn hàng và tích điểm thành viên</p>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <button class="btn-main" style="max-width:180px" onclick="openLoginModal('login')">Đăng nhập</button>
+          <button class="btn-out" style="max-width:180px" onclick="openLoginModal('register')">Đăng ký</button>
+        </div>
+      </div>
+    </div>
+    <div id="profile-logged" style="display:none">
+      <div class="profile-banner">
+        <div class="p-avatar-wrap">
+          <div class="p-avatar" id="p-av">?</div>
+          <button class="p-avatar-edit" onclick="triggerAvatarUpload()">✏️</button>
+          <input type="file" id="p-avatar-file-input" style="display:none" accept="image/*" onchange="handleAvatarFileSelect(event)">
+        </div>
+        <div style="flex:1">
+          <div class="p-name" id="p-display-name">Tên người dùng</div>
+          <div class="p-phone" id="p-display-phone">Chưa cập nhật số điện thoại</div>
+          <div class="p-badges" id="profile-badges-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+        <button style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px" onclick="openModal('logout-modal')">
+          <span>↩</span>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
+
+      <div class="profile-stats">
+        <div class="p-stat"><span class="p-stat-val" id="ps-orders">0</span><div class="p-stat-lbl">Đơn hàng</div></div>
+        <div class="p-stat"><span class="p-stat-val" id="ps-points">0</span><div class="p-stat-lbl">Điểm tích lũy</div></div>
+        <div class="p-stat"><span class="p-stat-val" id="ps-saved">0đ</span><div class="p-stat-lbl">Đã tiết kiệm</div></div>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">⚙️ Thông tin cá nhân</div>
+        <div class="f-row" style="margin-bottom:1rem">
+          <div class="form-sec"><label class="f-label">Họ</label><input class="f-in" type="text" id="pf-first" placeholder="Nguyễn"></div>
+          <div class="form-sec"><label class="f-label">Tên</label><input class="f-in" type="text" id="pf-last" placeholder="Văn A"></div>
+        </div>
+        <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Số điện thoại</label><input class="f-in" id="pf-phone" type="text" placeholder="0912 345 678"></div>
+        <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Email</label><input class="f-in" id="pf-email" type="email" placeholder="email@gmail.com"></div>
+        <div class="form-sec" style="margin-bottom:1.25rem"><label class="f-label">Ngày sinh</label><input class="f-in" id="pf-birth" type="date"></div>
+        <button class="btn-main" onclick="saveProfile()">Lưu thay đổi</button>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">📍 Địa chỉ giao hàng</div>
+        <div id="profile-address-list"></div>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">💳 Thanh toán & Ưu đãi</div>
+        <div class="menu-list-item" onclick="showToast('💰 Số dư ví đang cập nhật')">
+          <div class="mli-left"><div class="mli-icon">💰</div><div><div class="mli-label">Ví Quán ăn Fusion</div><div class="mli-sub" id="wallet-balance">Số dư: 0đ</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+        <div class="menu-list-item" onclick="showToast('🎁 Bạn đang có 2 mã khuyến mãi khả dụng')">
+          <div class="mli-left"><div class="mli-icon">🎁</div><div><div class="mli-label">Mã ưu đãi</div><div class="mli-sub" id="promo-count">2 mã đang hoạt động</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+        <div class="menu-list-item" onclick="showToast('⭐ Tích điểm để đổi ưu đãi')">
+          <div class="mli-left"><div class="mli-icon">⭐</div><div><div class="mli-label">Điểm thành viên</div><div class="mli-sub" id="point-summary">0 điểm → đổi được 0đ</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">🔔 Cài đặt</div>
+        <div class="menu-list-item" onclick="toggleNotification('order')">
+          <div class="mli-left"><div class="mli-icon">🔔</div><div><div class="mli-label">Thông báo đơn hàng</div><div class="mli-sub">Nhận cập nhật khi đơn đang xử lý</div></div></div>
+          <span id="notify-order" style="font-size:12px;font-weight:700;color:var(--orange)">BẬT</span>
+        </div>
+        <div class="menu-list-item" onclick="toggleNotification('promo')">
+          <div class="mli-left"><div class="mli-icon">🎁</div><div><div class="mli-label">Thông báo khuyến mãi</div><div class="mli-sub">Nhận mã giảm giá mới</div></div></div>
+          <span id="notify-promo" style="font-size:12px;font-weight:700;color:var(--orange)">BẬT</span>
+        </div>
+        <div class="menu-list-item" id="profile-change-pw-btn" onclick="openPasswordSection()">
+          <div class="mli-left"><div class="mli-icon">🔒</div><div><div class="mli-label">Đổi mật khẩu</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+        <div id="password-section" style="display:none;margin-top:1rem;padding:1rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surf)">
+          <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Mật khẩu cũ</label><input class="f-in" id="pw-old" type="password"></div>
+          <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Mật khẩu mới</label><input class="f-in" id="pw-new" type="password"></div>
+          <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Nhập lại mật khẩu mới</label><input class="f-in" id="pw-confirm" type="password"></div>
+          <button class="btn-main" onclick="changePassword()">Đổi mật khẩu</button>
+        </div>
+        <div class="menu-list-item" onclick="showToast('📞 Liên hệ hỗ trợ: 1800-6868')">
+          <div class="mli-left"><div class="mli-icon">📞</div><div><div class="mli-label">Hỗ trợ khách hàng</div><div class="mli-sub">1800-6868 · 24/7</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: ADMIN ══════════════ -->
+<div id="page-admin" class="page">
+  <div class="page-wrap">
+    <div id="admin-locked" style="display:none">
+      <div class="empty-state" style="padding:4rem 1rem">
+        <div class="empty-state-icon">🔐</div>
+        <h3>Admin chưa đăng nhập</h3>
+        <p>Vui lòng đăng nhập bằng tài khoản quản trị để mở bảng điều khiển</p>
+        <button class="btn-main" style="max-width:220px;margin:1rem auto 0" onclick="openModal('admin-login-modal')">Đăng nhập Admin</button>
+      </div>
+    </div>
+    <div id="admin-dashboard" style="display:none">
+      <div class="admin-shell">
+        <aside class="admin-sidebar">
+          <h3>Quản trị</h3>
+          <button class="admin-side-btn active" onclick="switchAdminPanel('overview',this)"><img src="images/admin/overview.png" alt="Tổng quan"> Tổng quan</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('orders',this)"><img src="images/admin/orders.png" alt="Đơn hàng"> Đơn hàng</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('items',this)"><img src="images/admin/products.png" alt="Sản phẩm"> Sản phẩm</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('promos',this)"><img src="images/category/khuyenmai.png" alt="Khuyến mãi"> Khuyến mãi</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('reports',this)"><img src="images/admin/reports.png" alt="Báo cáo"> Báo cáo</button>
+          <button class="admin-side-btn" style="margin-top:.5rem;color:var(--red)" onclick="logoutAdmin()"><img src="images/admin/logout.png" alt="Đăng xuất"> Đăng xuất</button>
+        </aside>
+        <section class="admin-main">
+          <div class="admin-panel active" id="admin-panel-overview">
+            <div class="admin-panel-head">
+              <div>
+                <div class="sec-title">Tổng quan hôm nay</div>
+                <div style="font-size:12px;color:var(--muted)">Cập nhật lúc <span id="admin-now"></span></div>
+              </div>
+              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminItemModal()">➕ Thêm món</button>
+            </div>
+            <div class="admin-stats">
+              <div class="admin-stat"><strong id="admin-stat-orders">0</strong><span>Đơn hôm nay</span></div>
+              <div class="admin-stat"><strong id="admin-stat-revenue">0đ</strong><span>Doanh thu</span></div>
+              <div class="admin-stat"><strong id="admin-stat-items">0</strong><span>Món đang bán</span></div>
+              <div class="admin-stat"><strong id="admin-stat-pending">0</strong><span>Đơn chờ xử lý</span></div>
+            </div>
+            <div class="admin-form-grid" style="margin-top:1rem">
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">📦 Đơn gần đây</div>
+                <div id="admin-recent-orders"></div>
+              </div>
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">🍽 Top bán chạy</div>
+                <div id="admin-top-items"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-orders">
+            <div class="admin-panel-head">
+              <div class="sec-title">Quản lý đơn hàng</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <input class="admin-input" id="admin-order-search" type="search" placeholder="Tìm mã / khách / SĐT" style="max-width:240px" oninput="renderAdminOrders()">
+                <select class="admin-select" id="admin-order-filter" style="max-width:180px" onchange="renderAdminOrders()">
+                  <option value="all">Tất cả</option>
+                  <option value="pending">Đang xử lý</option>
+                  <option value="delivering">Đang giao</option>
+                  <option value="done">Hoàn thành</option>
+                  <option value="cancelled">Đã hủy</option>
+                </select>
+                <select class="admin-select" id="admin-date-filter" style="max-width:150px" onchange="renderAdminOrders()">
+                  <option value="all">Tất cả ngày</option>
+                  <option value="today">Hôm nay</option>
+                  <option value="7days">7 ngày qua</option>
+                  <option value="30days">30 ngày qua</option>
+                </select>
+                <button class="btn-main" style="width:auto;padding:10px 14px" onclick="exportAdminOrders()">📤 Xuất CSV</button>
+              </div>
+            </div>
+            <div id="admin-orders-table"></div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-items">
+            <div class="admin-panel-head">
+              <div class="sec-title">Quản lý món ăn</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <input class="admin-input" id="admin-item-search" type="search" placeholder="Tìm món ăn" style="max-width:240px" oninput="renderAdminItems()">
+                <select class="admin-select" id="admin-item-category" style="max-width:180px" onchange="renderAdminItems()">
+                  <option value="all">Tất cả danh mục</option>
+                  <option value="pho">Phở</option>
+                  <option value="com">Cơm</option>
+                  <option value="bun">Bún</option>
+                  <option value="banhmi">Bánh mì</option>
+                  <option value="drink">Đồ uống</option>
+                </select>
+                <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminItemModal()">➕ Thêm món</button>
+              </div>
+            </div>
+            <div id="admin-items-table"></div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-promos">
+            <div class="admin-panel-head">
+              <div class="sec-title">Khuyến mãi</div>
+              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminPromoModal()">➕ Thêm mã</button>
+            </div>
+            <div class="profile-section" style="margin:0">
+              <div class="ps-title">Danh sách mã</div>
+              <div id="admin-promo-list"></div>
+            </div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-reports">
+            <div class="admin-panel-head">
+              <div class="sec-title">Báo cáo bán hàng</div>
+              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="exportAdminOrders()">📤 Xuất báo cáo</button>
+            </div>
+            <div class="admin-stats">
+              <div class="admin-stat"><strong id="admin-report-total-orders">0</strong><span>Tổng đơn</span></div>
+              <div class="admin-stat"><strong id="admin-report-revenue">0đ</strong><span>Doanh thu</span></div>
+              <div class="admin-stat"><strong id="admin-report-complete">0%</strong><span>Tỷ lệ hoàn thành</span></div>
+              <div class="admin-stat"><strong id="admin-report-cancel">0</strong><span>Đơn hủy</span></div>
+            </div>
+            <div class="admin-form-grid" style="margin-top:1rem">
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">📊 Top món bán chạy</div>
+                <div id="admin-report-top-items"></div>
+              </div>
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">🗂 Trạng thái đơn hàng</div>
+                <div id="admin-report-status"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     MODALS — Auth
+     ═══════════════════════════════ -->
+
+<!-- Modal: Đăng nhập / Đăng ký (redirect) -->
+<div class="ov" id="login-modal" onclick="closeOvOutside(event,'login-modal')">
+  <div class="modal" style="padding:2rem;max-width:520px;text-align:center">
+    <button class="modal-close" onclick="closeModal('login-modal')">✕</button>
+    <div style="font-size:48px;margin-bottom:.75rem">🔐</div>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Đăng nhập / Đăng ký</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Bạn sẽ được chuyển đến trang riêng để đăng nhập hoặc tạo tài khoản.</p>
+    <button class="btn-main" onclick="window.location.href='src/partials/auth.html'">Đi đến trang đăng nhập</button>
+  </div>
+</div>
+
+<!-- Modal: Đăng xuất -->
+<div class="ov" id="logout-modal" onclick="closeOvOutside(event,'logout-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:420px;text-align:center">
+    <button class="modal-close" onclick="closeModal('logout-modal')">✕</button>
+    <div style="font-size:48px;margin-bottom:.75rem">🚪</div>
+    <h2 style="font-size:18px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Bạn muốn đăng xuất?</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Bạn vẫn có thể đăng nhập lại bất cứ lúc nào.</p>
+    <div style="display:flex;gap:10px">
+      <button class="btn-out" style="margin-top:0" onclick="closeModal('logout-modal')">Hủy</button>
+      <button class="btn-main" style="margin-top:0" onclick="closeModal('logout-modal');doLogout()">Đăng xuất</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     MODALS — Admin
+     ═══════════════════════════════ -->
+
+<!-- Modal: Đăng nhập Admin -->
+<div class="ov" id="admin-login-modal" onclick="closeOvOutside(event,'admin-login-modal')">
+  <div class="modal" style="padding:2rem;max-width:420px">
+    <button class="modal-close" onclick="closeModal('admin-login-modal')">✕</button>
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:40px;margin-bottom:.5rem">🛠️</div>
+      <h2 style="font-size:22px;font-weight:900;color:var(--brown)">Đăng nhập Admin</h2>
+    </div>
+    <div class="form-sec"><label class="f-label">Tên đăng nhập</label><input class="f-in" id="admin-user" type="text" value="admin"></div>
+    <div class="form-sec" style="margin-top:1rem"><label class="f-label">Mật khẩu</label><input class="f-in" id="admin-pass" type="password" value="admin123"></div>
+    <button class="btn-main" style="margin-top:1rem" onclick="doAdminLogin()">Đăng nhập</button>
+  </div>
+</div>
+
+<!-- Modal: Thêm / sửa mã khuyến mãi -->
+<div class="ov" id="admin-promo-modal" onclick="closeOvOutside(event,'admin-promo-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:460px">
+    <button class="modal-close" onclick="closeModal('admin-promo-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem" id="admin-promo-title">Thêm mã khuyến mãi</h2>
+    <div class="admin-form-grid">
+      <div class="form-sec full"><label class="f-label">Mã khuyến mãi</label><input class="f-in" id="admin-promo-code" type="text" placeholder="SALE20"></div>
+      <div class="form-sec"><label class="f-label">Loại</label>
+        <select class="admin-select" id="admin-promo-type">
+          <option value="percent">Phần trăm</option>
+          <option value="fixed">Giảm tiền</option>
+          <option value="ship">Miễn phí ship</option>
+        </select>
+      </div>
+      <div class="form-sec"><label class="f-label">Giá trị</label><input class="f-in" id="admin-promo-value" type="number" placeholder="20"></div>
+      <div class="form-sec full"><label class="f-label">Mô tả</label><input class="f-in" id="admin-promo-label" type="text" placeholder="Giảm 20% cho đơn từ 100k"></div>
+    </div>
+    <button class="btn-main" style="margin-top:1rem" onclick="saveAdminPromo()">Lưu mã</button>
+  </div>
+</div>
+
+<!-- Modal: Thêm / sửa món ăn -->
+<div class="ov" id="admin-item-modal" onclick="closeOvOutside(event,'admin-item-modal')">
+  <div class="modal" style="padding:2rem;max-width:520px">
+    <button class="modal-close" onclick="closeModal('admin-item-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem" id="admin-item-title">Thêm món mới</h2>
+    <div class="admin-form-grid">
+      <div class="form-sec full"><label class="f-label">Tên món</label><input class="f-in" id="admin-item-name" type="text"></div>
+      <div class="form-sec"><label class="f-label">Danh mục</label>
+        <select class="admin-select" id="admin-item-cat">
+          <option value="pho">Phở &amp; Bún</option>
+          <option value="com">Cơm</option>
+          <option value="banh">Bánh</option>
+          <option value="nuoc">Đồ uống</option>
+          <option value="trangmieng">Tráng miệng</option>
+          <option value="khuyen-mai">Khuyến mãi</option>
+        </select>
+      </div>
+      <div class="form-sec"><label class="f-label">Giá</label><input class="f-in" id="admin-item-price" type="number"></div>
+      <div class="form-sec"><label class="f-label">Giá cũ</label><input class="f-in" id="admin-item-old" type="number" placeholder="(không bắt buộc)"></div>
+      <div class="form-sec"><label class="f-label">Ảnh URL</label><input class="f-in" id="admin-item-img" type="text" placeholder="https://..."></div>
+      <div class="form-sec"><label class="f-label">Badge</label>
+        <select class="admin-select" id="admin-item-badge">
+          <option value="">Không có</option>
+          <option value="Bestseller">Bestseller</option>
+          <option value="New">New</option>
+          <option value="Sale">Sale</option>
+        </select>
+      </div>
+      <div class="form-sec full"><label class="f-label">Mô tả</label><textarea class="admin-textarea" id="admin-item-desc" rows="3"></textarea></div>
+      <div class="form-sec full"><label class="f-label">Tùy chỉnh (phân cách bằng dấu ,)</label><input class="f-in" id="admin-item-toppings" type="text" placeholder="Thêm hành,Không hành"></div>
+    </div>
+    <button class="btn-main" style="margin-top:1rem" onclick="saveAdminItem()">Lưu món</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     MODALS — Checkout & Cart
+     ═══════════════════════════════ -->
+
+<!-- Modal: Chi tiết món ăn (JS render nội dung) -->
+<div class="ov" id="item-modal" onclick="closeOvOutside(event,'item-modal')">
+  <div class="modal" id="item-modal-body" style="max-width:580px;padding:0"></div>
+</div>
+
+<!-- Modal: Xác nhận đặt hàng / Checkout -->
+<div class="ov" id="ck-modal" onclick="closeOvOutside(event,'ck-modal')">
+  <div class="modal" style="padding:2rem;max-width:520px">
+    <button class="modal-close" onclick="closeModal('ck-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Xác nhận đặt hàng</h2>
+    <div class="ck-steps" style="margin:1.25rem 0 1.75rem">
+      <div class="ck-step"><div class="ck-dot done">✓</div><div class="ck-lbl">Giỏ hàng</div></div>
+      <div class="ck-step"><div class="ck-dot active">2</div><div class="ck-lbl active">Thông tin</div></div>
+      <div class="ck-step"><div class="ck-dot">3</div><div class="ck-lbl">Thanh toán</div></div>
+      <div class="ck-step"><div class="ck-dot">4</div><div class="ck-lbl">Xác nhận</div></div>
+    </div>
+    <div class="form-sec"><label class="f-label">Họ và tên</label><input class="f-in" id="ck-name" type="text" placeholder="Nguyễn Văn A"></div>
+    <div class="f-row" style="margin:1rem 0">
+      <div class="form-sec"><label class="f-label">Số điện thoại</label><input class="f-in" id="ck-phone" type="text" placeholder="0912 345 678"></div>
+      <div class="form-sec"><label class="f-label">Email (tuỳ chọn)</label><input class="f-in" type="email" placeholder="email@gmail.com"></div>
+    </div>
+    <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Địa chỉ giao hàng</label><input class="f-in" id="ck-addr" type="text" placeholder="Số nhà, đường, phường, quận, TP"></div>
+    <div class="form-sec" style="margin-bottom:1.25rem"><label class="f-label">Ghi chú thêm</label><input class="f-in" type="text" placeholder="Tầng 3, tòa nhà A, gọi trước khi đến…"></div>
+    <div id="points-redemption-box" style="display:none;margin-bottom:1.25rem;padding:12px;background:var(--orange-l);border:1px solid rgba(232,82,26,.2);border-radius:var(--r-sm)">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;font-weight:600;color:var(--text)">
+        <input type="checkbox" id="ck-use-points" onchange="updCheckoutTotal()">
+        Dùng điểm tích lũy: <span id="ck-avail-points">0</span> điểm (giảm <span id="ck-points-val">0đ</span>)
+      </label>
+    </div>
+    <div class="f-label" style="margin-bottom:.75rem">Phương thức thanh toán</div>
+    <div class="pay-opts" id="pay-opts">
+      <div class="pay-opt sel" onclick="selPay(this,'cod')"><img src="images/payment/cod.png" class="pay-badge" alt="COD"><span>Tiền mặt (COD)</span></div>
+      <div class="pay-opt" onclick="selPay(this,'momo')"><img src="images/payment/momo.svg" class="pay-badge" alt="MoMo"><span>MoMo</span></div>
+      <div class="pay-opt" onclick="selPay(this,'zalopay')"><img src="images/payment/zalopay.png" class="pay-badge" alt="ZaloPay"><span>ZaloPay</span></div>
+      <div class="pay-opt" onclick="selPay(this,'vnpay')"><img src="images/payment/vnpay.svg" class="pay-badge" alt="VNPay"><span>VNPay</span></div>
+      <div class="pay-opt" onclick="selPay(this,'card')" style="grid-column:span 2"><span class="pay-icon-stack"><img src="images/payment/visa.png" class="pay-badge" alt="Visa"><img src="images/payment/mastercard.png" class="pay-badge" alt="Mastercard" style="margin-left:-10px"></span><span>Visa / Mastercard</span></div>
+      <div class="pay-opt" onclick="selPay(this,'bank')"><img src="images/payment/mbbank.png" class="pay-badge" alt="MB Bank"><span>Chuyển khoản MB Bank</span></div>
+    </div>
+
+
+    <div class="ck-summary" id="ck-summary-box"></div>
+    <button class="btn-main" onclick="confirmOrder()">✅ Xác nhận &amp; Đặt hàng</button>
+  </div>
+</div>
+
+<!-- Modal: Đặt hàng thành công -->
+<div class="ov" id="success-modal">
+  <div class="modal" style="padding:0;max-width:480px;overflow:hidden">
+    <div class="success-anim">
+      <div class="success-circle">✓</div>
+      <h2>Đặt hàng thành công!</h2>
+      <p>Cảm ơn bạn đã tin tưởng Quán ăn Fusion.<br>Đơn hàng đang được chuẩn bị ngay bây giờ!</p>
+      <div class="order-info-box">
+        <div>
+          <div class="oib-id" id="success-oid">#PGD0001</div>
+          <div class="oib-eta">Dự kiến giao lúc <strong id="success-eta">12:30</strong></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--muted)">Tổng tiền</div>
+          <div style="font-size:16px;font-weight:900;color:var(--orange)" id="success-total"></div>
+        </div>
+      </div>
+      <div class="track-strip">
+        <div class="ts-step done"><div class="ts-dot done">✓</div><div class="ts-lbl done">Đặt hàng</div></div>
+        <div class="ts-step curr"><div class="ts-dot curr">🍳</div><div class="ts-lbl curr">Chế biến</div></div>
+        <div class="ts-step"><div class="ts-dot">🛵</div><div class="ts-lbl">Đang giao</div></div>
+        <div class="ts-step"><div class="ts-dot">🏠</div><div class="ts-lbl">Đã nhận</div></div>
+      </div>
+    </div>
+    <div style="padding:0 1.5rem 1.5rem;display:flex;flex-direction:column;gap:10px">
+      <button class="btn-main" onclick="closeModal('success-modal');showPage('orders')">Theo dõi đơn hàng</button>
+      <button class="btn-out" onclick="closeModal('success-modal')">Tiếp tục mua sắm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Cổng thanh toán (QR) -->
+<div class="ov" id="gateway-modal">
+  <div class="modal" style="max-width:400px; text-align:center;">
+    <button class="modal-close" onclick="closeModal('gateway-modal')">×</button>
+    <div style="margin-bottom:1rem;">
+      <img src="" id="gateway-logo" style="height:40px; object-fit:contain; margin-bottom:10px;">
+      <h3 style="margin:0; color:var(--text);" id="gateway-title">Thanh toán</h3>
+    </div>
+    
+    <div style="background: white; padding: 15px; border-radius: 12px; display:inline-block; margin-bottom: 1rem; border: 1px solid var(--border);">
+      <img src="" id="gateway-qr" style="width: 200px; height: 200px; object-fit:contain; display:block;">
+    </div>
+    
+    <div style="background: var(--surf2); border-radius: 8px; padding: 12px; margin-bottom: 1.5rem; text-align:left; font-size: 14px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="color:var(--muted);">Chủ tài khoản:</span>
+        <strong style="color:var(--text);">TRẦN VĂN ĐẠT</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="color:var(--muted);">Số tài khoản:</span>
+        <strong style="color:var(--text);" id="gateway-account">0987654321</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="color:var(--muted);">Số tiền:</span>
+        <strong style="color:var(--red); font-size:16px;" id="gateway-amount">0đ</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 6px;">
+        <span style="color:var(--muted);">Nội dung CK:</span>
+        <strong style="color:var(--text);" id="gateway-content">ThanhToan</strong>
+      </div>
+    </div>
+    
+    <div style="color:var(--primary); font-weight:600; margin-bottom: 1.5rem; font-size:15px;">
+      ⏳ Đang chờ thanh toán... <span id="gateway-timer">15:00</span>
+    </div>
+    
+    <button class="btn-main" onclick="confirmGatewayPayment()" style="width:100%;">Xác nhận đã chuyển khoản</button>
+    <div style="color:var(--muted); font-size:12px; margin-top:1rem;">* Hệ thống sẽ tự động duyệt ngay sau khi nhận được tiền.</div>
+  </div>
+</div>
+
+<!-- Modal: Mã ưu đãi -->
+<div class="ov" id="promo-modal" onclick="closeOvOutside(event,'promo-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:480px">
+    <button class="modal-close" onclick="closeModal('promo-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem">Danh sách mã ưu đãi</h2>
+    <div id="promo-modal-list"></div>
+  </div>
+</div>
+
+<!-- Modal: Địa chỉ giao hàng -->
+<div class="ov" id="addr-modal" onclick="closeOvOutside(event,'addr-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:460px">
+    <button class="modal-close" onclick="closeModal('addr-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem" id="addr-modal-title">Thêm địa chỉ mới</h2>
+    <input type="hidden" id="addr-modal-key">
+    <div class="form-sec"><label class="f-label">Nhãn địa chỉ</label><input class="f-in" id="addr-modal-label" type="text" placeholder="Nhà, Công ty, Văn phòng..."></div>
+    <div class="form-sec" style="margin-top:1rem"><label class="f-label">Địa chỉ chi tiết</label><input class="f-in" id="addr-modal-value" type="text" placeholder="Số nhà, đường, phường, quận, TP"></div>
+    <button class="btn-main" style="margin-top:1rem" onclick="saveAddressModal()">Lưu địa chỉ</button>
+  </div>
+</div>
+
+<!-- Modal: Đánh giá món ăn -->
+<div class="ov" id="review-modal" onclick="closeOvOutside(event,'review-modal')">
+  <div class="modal" style="padding:2rem;max-width:500px">
+    <button class="modal-close" onclick="closeModal('review-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Đánh giá món ăn</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Đánh giá của bạn sẽ giúp nhà hàng cải thiện chất lượng dịch vụ.</p>
+    <div id="review-items-container" style="display:flex;flex-direction:column;gap:1.25rem"></div>
+    <button class="btn-main" style="margin-top:1.5rem" onclick="submitAllReviews()">Gửi đánh giá</button>
+  </div>
+</div>
+
+<!-- Modal: Giỏ hàng modal (JS render) -->
+<div class="ov" id="cart-modal" onclick="closeOvOutside(event,'cart-modal')">
+  <div class="modal" id="cart-modal-body" style="padding:2rem;max-width:480px"></div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     TOAST & SCRIPTS
+     ═══════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- JS — thứ tự quan trọng để khởi tạo app -->
+<!-- Core -->
+<script src="js/core/config.js"></script>
+<script src="js/core/data.js"></script>
+<script src="js/core/storage.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/utils.js"></script>
+<!-- Features -->
+<script src="js/features/menu.js"></script>
+<script src="js/features/cart.js"></script>
+<script src="js/features/checkout.js"></script>
+<script src="js/features/orders.js"></script>
+<script src="js/features/profile.js"></script>
+<!-- Admin -->
+<script src="js/admin/admin-core.js"></script>
+<script src="js/admin/admin-orders.js"></script>
+<script src="js/admin/admin-items.js"></script>
+<script src="js/admin/admin-promos.js"></script>
+<script src="js/admin/admin-reports.js"></script>
+<!-- Auth -->
+<script src="js/auth/auth.js"></script>
+<script src="js/auth/login.js"></script>
+<script src="js/auth/register.js"></script>
+<script src="js/auth/social-login.js"></script>
+<script src="js/auth/forgot-password.js"></script>
+<script src="js/auth/auth-bridge.js"></script>
+<!-- Init -->
+<script src="js/core/app-fixes.js"></script>
+<script src="js/core/init.js"></script>
+
+
+<!-- ═══════════════════════════════
+     FOOTER + SUPPORT CHAT
+     ═══════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Quán ăn Fusion</h3>
+        <p>Đặt món nhanh · Giao hàng tận nơi · Món ăn ngon mỗi ngày.</p>
+      </div>
+      <div>
+        <div class="footer-title">Liên hệ</div>
+        <div class="footer-contact">
+          <span>📞 1800 6868</span>
+          <span>📧 support@phogiadinh.vn</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Địa chỉ</div>
+        <div class="footer-contact">
+          <span>📍 123 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội</span>
+          <span>🕗 Mở cửa: 08:00 – 22:00</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Dịch vụ</div>
+        <ul class="footer-links">
+          <li><a href="#">Giao hàng</a></li>
+          <li><a href="#">Đặt món online</a></li>
+          <li><a href="#">Khuyến mãi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Quán ăn Fusion. Mọi quyền được bảo lưu.</div>
+  </div>
+</footer>
+
+<!-- Support Chat Widget -->
+<div class="support-chat">
+  <div class="support-panel" id="support-panel">
+    <div class="support-panel-header">
+      <strong>Hỗ trợ khách hàng</strong>
+      <button class="support-close" onclick="toggleSupportPanel()">✕</button>
+    </div>
+    <div class="support-panel-body">
+      <div class="support-faq">
+        <button onclick="sendQuickSupport('Làm thế nào để đặt món?')">Đặt món</button>
+        <button onclick="sendQuickSupport('Đơn hàng mất bao lâu?')">Thời gian giao</button>
+        <button onclick="sendQuickSupport('Tôi muốn hủy đơn')">Hủy đơn</button>
+        <button onclick="sendQuickSupport('Có thể thanh toán bằng gì?')">Thanh toán</button>
+      </div>
+      <div class="support-chat-log" id="support-chat-log">
+        <div class="support-msg bot">Xin chào! Tôi có thể giúp bạn tìm thông tin về đặt món, giao hàng hoặc thanh toán.</div>
+      </div>
+      <div class="support-input-row">
+        <input class="support-input" id="support-input" type="text" placeholder="Nhập câu hỏi của bạn..." onkeydown="if(event.key==='Enter') sendSupportMessage()">
+        <button class="support-send" onclick="sendSupportMessage()">Gửi</button>
+      </div>
+      <div class="support-hotline">
+        <span>☎ Hotline</span>
+        <strong>1800 6868</strong>
+      </div>
+    </div>
+  </div>
+  <button class="support-chat-btn" onclick="toggleSupportPanel()">💬</button>
+</div>
+
+
+</body>
+</html>
+
