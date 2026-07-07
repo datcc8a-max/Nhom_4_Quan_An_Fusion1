@@ -1,0 +1,16 @@
+/* ── CSS VARIABLES ── */
+:root{
+  --orange:#E8521A;--orange-l:#FFF3E9;--orange-d:#C03F0E;
+  --orange-2:#FF9A3D;--cream:#FFF9F3;--brown:#4A2C12;--brown-l:#8B5E3C;
+  --surf:#fff;--surf2:#F9F5F0;--surf3:#F2ECE4;
+  --border:rgba(74,44,18,.1);--border2:rgba(74,44,18,.18);
+  --text:#2C1A0E;--muted:#8B7355;--muted2:#BBA98A;
+  --green:#16A34A;--green-l:#DCFCE7;
+  --red:#DC2626;--red-l:#FEE2E2;
+  --yellow:#F59E0B;--yellow-l:#FEF9C3;
+  --r:12px;--r-sm:8px;--r-lg:18px;--r-xl:24px;
+  --sh:0 2px 12px rgba(74,44,18,.08);
+  --sh-lg:0 12px 40px rgba(74,44,18,.15);
+  --sh-xl:0 20px 60px rgba(74,44,18,.2);
+  --trans-dur:0.3s;
+}
