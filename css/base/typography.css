@@ -1,0 +1,53 @@
+/* ── TYPOGRAPHY & UTILITY CLASSES ── */
+body{
+  font-family:'Segoe UI',system-ui,sans-serif;
+  color:var(--text);
+  line-height:1.5;
+}
+
+/* ── SECTION HEADINGS ── */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.sec-title{font-size:19px;font-weight:800;color:var(--brown);letter-spacing:-.3px}
+.sec-link{font-size:13px;color:var(--orange);font-weight:600;background:none;border:none;cursor:pointer}
+.sec-link:hover{text-decoration:underline}
+
+/* ── SORT ROW ── */
+.sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.sort-row span{font-size:13px;color:var(--muted)}
+.sort-select{border:1.5px solid var(--border);border-radius:var(--r-sm);padding:6px 10px;font-size:13px;background:var(--surf);color:var(--text);outline:none;cursor:pointer;transition:border-color .2s, box-shadow .2s}
+.sort-select:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-l)}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--muted)}
+.empty-state-icon{font-size:56px;margin-bottom:1rem}
+.empty-state h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.empty-state p{font-size:13px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(30px);background:var(--brown);color:#fff;padding:12px 22px;border-radius:99px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:all .4s cubic-bezier(0.2, 1, 0.4, 1);pointer-events:none;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(44,26,14,.3);white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:var(--green)}
+.toast.err{background:var(--red)}
+
+/* ── NOTIFICATION BANNER ── */
+.notif-banner{background:linear-gradient(90deg,var(--orange-l),#FFF8F4);border:1px solid rgba(232,82,26,.2);border-radius:var(--r-sm);padding:.75rem 1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.notif-banner strong{color:var(--orange)}
+.notif-close{margin-left:auto;background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer}
+
+/* ── DELIVERY INFO BAR ── */
+.deliv-bar{background:var(--surf);border:1px solid var(--border);border-radius:var(--r-sm);padding:.75rem 1.25rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem;font-size:12px;color:var(--muted)}
+.deliv-item{display:flex;align-items:center;gap:6px}
+.deliv-item svg{width:15px;height:15px;color:var(--orange)}
+.deliv-item strong{color:var(--text)}
+
+/* ── RELATED / HORIZONTAL SCROLL ── */
+.h-scroll{display:flex;gap:1rem;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.h-scroll::-webkit-scrollbar{display:none}
+.h-item{flex-shrink:0;width:180px;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .2s ease}
+.h-item:hover{box-shadow:var(--sh);transform:translateY(-4px)}
+.h-item-img{height:110px;overflow:hidden}
+.h-item-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.h-item:hover .h-item-img img{transform:scale(1.07)}
+.h-item-body{padding:9px 10px}
+.h-item-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.h-item-price{font-size:12px;font-weight:800;color:var(--orange)}
