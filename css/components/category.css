@@ -1,0 +1,20 @@
+/* ── CATEGORY PILLS ── */
+.cat-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:2rem;scrollbar-width:none}
+.cat-row::-webkit-scrollbar{display:none}
+.cat-pill{background:var(--surf);border:1.5px solid var(--border);border-radius:99px;padding:8px 18px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;color:var(--muted);display:flex;align-items:center;gap:6px}
+.cat-pill:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-l);transform:translateY(-2px)}
+.cat-pill.active{background:linear-gradient(90deg,var(--orange),#ff7a3d);border-color:var(--orange);color:#fff;font-weight:700;box-shadow:0 3px 10px rgba(232,82,26,.3);transform:translateY(-2px)}
+.cat-pill img{width:20px;height:20px;border-radius:4px;object-fit:cover}
+
+/* ── FEATURED BANNER CARDS ── */
+.banner-card{border-radius:var(--r-lg);overflow:hidden;position:relative;height:140px;cursor:pointer;transition:transform .2s, box-shadow .2s;box-shadow:var(--sh)}
+.banner-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
+.banner-card::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);transition:transform .8s}
+.banner-card:hover::before{transform:translateX(100%)}
+.banner-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.banner-card:hover img{transform:scale(1.1)}
+.banner-card-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(44,26,14,.75) 0%,transparent 60%);display:flex;align-items:flex-end;padding:14px}
+.banner-card-text{color:#fff}
+.banner-card-text strong{display:block;font-size:14px;font-weight:700}
+.banner-card-text span{font-size:11px;opacity:.8}
+.banner-tag{position:absolute;top:10px;right:10px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px}
