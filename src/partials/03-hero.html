@@ -1,0 +1,110 @@
+<!-- ═══════════════════════════════
+     TRANG CHỦ: Hero + Flash Sale + Banner danh mục
+     ═══════════════════════════════ -->
+<div id="page-menu" class="page active">
+<div style="max-width:1280px;margin:0 auto;padding:1.5rem 1.5rem 0">
+
+  <!-- Thông báo khuyến mãi -->
+  <div class="notif-banner animate-in" id="promo-banner">
+    🎉 <span>Hôm nay: Miễn phí giao hàng cho đơn từ 150.000đ — Dùng mã <strong>FREESHIP</strong></span>
+    <button class="notif-close" onclick="this.closest('.notif-banner').style.display='none'">×</button>
+  </div>
+
+  <!-- Hero Banner -->
+  <div class="hero animate-in">
+    <div class="hero-bg"><img src="images/foods/img_56392371.jpg" alt="Quán ăn Fusion"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">🏆 Được yêu thích nhất Hà Nội 2025</div>
+      <h1>Ăn ngon<br>mỗi <span>bữa cơm</span></h1>
+      <p class="hero-sub">Hơn 50 món ăn truyền thống, nguyên liệu tươi mỗi ngày.<br>Giao hàng trong 30 phút hoặc hoàn tiền.</p>
+      <div class="hero-cta">
+        <button class="btn-hero" onclick="document.getElementById('menu-grid').scrollIntoView({behavior:'smooth'})">Đặt ngay</button>
+        <button class="btn-hero-out" onclick="showToast('📹 Đang mở video giới thiệu…')">▶ Xem nhà bếp</button>
+      </div>
+    </div>
+    <div class="hero-chips">
+      <div class="hero-chip"><strong>4.9★</strong><small>Đánh giá</small></div>
+      <div class="hero-chip"><strong>30'</strong><small>Giao hàng</small></div>
+      <div class="hero-chip"><strong>10K+</strong><small>Khách hàng</small></div>
+    </div>
+  </div>
+
+  <!-- Thanh thông tin giao hàng -->
+  <div class="deliv-bar animate-in">
+    <div class="deliv-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Thời gian: <strong>30–45 phút</strong>
+    </div>
+    <div class="deliv-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Phí giao: <strong>15.000đ</strong> (Miễn phí từ 150K)
+    </div>
+    <div class="deliv-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Cam kết: <strong>Hoàn tiền nếu chậm</strong>
+    </div>
+    <div class="deliv-item" id="deliv-location-text" style="margin-left:auto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <strong>123 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội</strong>
+      <span style="margin-left:6px;color:var(--muted);font-size:12px">📞 0901 234 567</span>
+    </div>
+  </div>
+
+  <!-- Flash Sale -->
+  <div class="flash-strip animate-in" id="flash-strip">
+    <div>
+      <div style="font-size:13px;font-weight:800;margin-bottom:4px">⚡ FLASH SALE</div>
+      <div class="flash-timer">
+        <div class="timer-block"><span id="t-h">02</span><small>GIỜ</small></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block"><span id="t-m">45</span><small>PHÚT</small></div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block"><span id="t-s">30</span><small>GIÂY</small></div>
+      </div>
+    </div>
+    <div class="flash-deals">
+      <div class="flash-item" onclick="openItemById(1)">
+        <div class="flash-item-name">Phở Bò Tái Chín</div>
+        <div class="flash-item-price">75.000đ → <strong>60.000đ</strong></div>
+        <span class="flash-item-save">-20%</span>
+      </div>
+      <div class="flash-item" onclick="openItemById(4)">
+        <div class="flash-item-name">Cơm Tấm Sườn</div>
+        <div class="flash-item-price">80.000đ → <strong>64.000đ</strong></div>
+        <span class="flash-item-save">-20%</span>
+      </div>
+      <div class="flash-item" onclick="openItemById(9)">
+        <div class="flash-item-name">Trà Sữa Trân Châu</div>
+        <div class="flash-item-price">45.000đ → <strong>35.000đ</strong></div>
+        <span class="flash-item-save">-22%</span>
+      </div>
+      <div class="flash-item" onclick="openItemById(7)">
+        <div class="flash-item-name">Bánh Mì Đặc Biệt</div>
+        <div class="flash-item-price">35.000đ → <strong>28.000đ</strong></div>
+        <span class="flash-item-save">-20%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner danh mục -->
+  <div class="banner-strip animate-in" style="margin-bottom:2rem">
+    <div class="banner-card" onclick="filterCatById('pho')">
+      <img src="images/foods/img_ef33d7e3.jpg" alt="Phở & Bún">
+      <div class="banner-card-overlay"><div class="banner-card-text"><strong>Phở &amp; Bún</strong><span>8 món đặc sắc</span></div></div>
+      <div class="banner-tag">Hot</div>
+    </div>
+    <div class="banner-card" onclick="filterCatById('com')">
+      <img src="images/foods/img_d7128823.jpg" alt="Cơm Tấm">
+      <div class="banner-card-overlay"><div class="banner-card-text"><strong>Cơm Tấm</strong><span>5 món đặc biệt</span></div></div>
+      <div class="banner-tag" style="background:var(--green)">New</div>
+    </div>
+    <div class="banner-card" onclick="filterCatById('khuyen-mai')">
+      <img src="images/foods/img_17eb3beb.jpg" alt="Combo">
+      <div class="banner-card-overlay"><div class="banner-card-text"><strong>Combo Tiết Kiệm</strong><span>Giảm đến 30%</span></div></div>
+      <div class="banner-tag" style="background:#DC2626">Sale</div>
+    </div>
+  </div>
+
+</div><!-- /max-width wrapper -->
+
