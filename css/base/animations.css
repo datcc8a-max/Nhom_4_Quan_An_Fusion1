@@ -1,0 +1,28 @@
+/* ── ANIMATIONS ── */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(16px) scale(1.04)}}
+@keyframes shake{0%,100%{transform:scale(1)}10%,30%{transform:scale(1.4) rotate(-5deg)}20%,40%{transform:scale(1.4) rotate(5deg)} 50%{transform:scale(1.4) rotate(0)} 60%{transform:scale(.9)}80%{transform:scale(1.15)}}
+@keyframes fav-pop{0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1.2)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes slide-up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(232,82,26,.4)}50%{box-shadow:0 0 0 6px rgba(232,82,26,0)}}
+@keyframes shimmer{0% { background-position: -468px 0; }100% { background-position: 468px 0; }}
+
+.animate-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.animate-in.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+.shimmer {
+    background: #f6f7f8;
+    background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 104px;
+    animation: shimmer 1s linear infinite;
+}
