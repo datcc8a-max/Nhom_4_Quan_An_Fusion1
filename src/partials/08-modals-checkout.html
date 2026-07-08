@@ -1,0 +1,158 @@
+<!-- ═══════════════════════════════
+     MODALS — Checkout & Cart
+     ═══════════════════════════════ -->
+
+<!-- Modal: Chi tiết món ăn (JS render nội dung) -->
+<div class="ov" id="item-modal" onclick="closeOvOutside(event,'item-modal')">
+  <div class="modal" id="item-modal-body" style="max-width:580px;padding:0"></div>
+</div>
+
+<!-- Modal: Xác nhận đặt hàng / Checkout -->
+<div class="ov" id="ck-modal" onclick="closeOvOutside(event,'ck-modal')">
+  <div class="modal" style="padding:2rem;max-width:520px">
+    <button class="modal-close" onclick="closeModal('ck-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Xác nhận đặt hàng</h2>
+    <div class="ck-steps" style="margin:1.25rem 0 1.75rem">
+      <div class="ck-step"><div class="ck-dot done">✓</div><div class="ck-lbl">Giỏ hàng</div></div>
+      <div class="ck-step"><div class="ck-dot active">2</div><div class="ck-lbl active">Thông tin</div></div>
+      <div class="ck-step"><div class="ck-dot">3</div><div class="ck-lbl">Thanh toán</div></div>
+      <div class="ck-step"><div class="ck-dot">4</div><div class="ck-lbl">Xác nhận</div></div>
+    </div>
+    <div class="form-sec"><label class="f-label">Họ và tên</label><input class="f-in" id="ck-name" type="text" placeholder="Nguyễn Văn A"></div>
+    <div class="f-row" style="margin:1rem 0">
+      <div class="form-sec"><label class="f-label">Số điện thoại</label><input class="f-in" id="ck-phone" type="text" placeholder="0912 345 678"></div>
+      <div class="form-sec"><label class="f-label">Email (tuỳ chọn)</label><input class="f-in" type="email" placeholder="email@gmail.com"></div>
+    </div>
+    <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Địa chỉ giao hàng</label><input class="f-in" id="ck-addr" type="text" placeholder="Số nhà, đường, phường, quận, TP"></div>
+    <div class="form-sec" style="margin-bottom:1.25rem"><label class="f-label">Ghi chú thêm</label><input class="f-in" type="text" placeholder="Tầng 3, tòa nhà A, gọi trước khi đến…"></div>
+    <div id="points-redemption-box" style="display:none;margin-bottom:1.25rem;padding:12px;background:var(--orange-l);border:1px solid rgba(232,82,26,.2);border-radius:var(--r-sm)">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;font-weight:600;color:var(--text)">
+        <input type="checkbox" id="ck-use-points" onchange="updCheckoutTotal()">
+        Dùng điểm tích lũy: <span id="ck-avail-points">0</span> điểm (giảm <span id="ck-points-val">0đ</span>)
+      </label>
+    </div>
+    <div class="f-label" style="margin-bottom:.75rem">Phương thức thanh toán</div>
+    <div class="pay-opts" id="pay-opts">
+      <div class="pay-opt sel" onclick="selPay(this,'cod')"><img src="images/payment/cod.png" class="pay-badge" alt="COD"><span>Tiền mặt (COD)</span></div>
+      <div class="pay-opt" onclick="selPay(this,'momo')"><img src="images/payment/momo.svg" class="pay-badge" alt="MoMo"><span>MoMo</span></div>
+      <div class="pay-opt" onclick="selPay(this,'zalopay')"><img src="images/payment/zalopay.png" class="pay-badge" alt="ZaloPay"><span>ZaloPay</span></div>
+      <div class="pay-opt" onclick="selPay(this,'vnpay')"><img src="images/payment/vnpay.svg" class="pay-badge" alt="VNPay"><span>VNPay</span></div>
+      <div class="pay-opt" onclick="selPay(this,'card')" style="grid-column:span 2"><span class="pay-icon-stack"><img src="images/payment/visa.png" class="pay-badge" alt="Visa"><img src="images/payment/mastercard.png" class="pay-badge" alt="Mastercard" style="margin-left:-10px"></span><span>Visa / Mastercard</span></div>
+      <div class="pay-opt" onclick="selPay(this,'bank')"><img src="images/payment/mbbank.png" class="pay-badge" alt="MB Bank"><span>Chuyển khoản MB Bank</span></div>
+    </div>
+
+
+    <div class="ck-summary" id="ck-summary-box"></div>
+    <button class="btn-main" onclick="confirmOrder()">✅ Xác nhận &amp; Đặt hàng</button>
+  </div>
+</div>
+
+<!-- Modal: Đặt hàng thành công -->
+<div class="ov" id="success-modal">
+  <div class="modal" style="padding:0;max-width:480px;overflow:hidden">
+    <div class="success-anim">
+      <div class="success-circle">✓</div>
+      <h2>Đặt hàng thành công!</h2>
+      <p>Cảm ơn bạn đã tin tưởng Quán ăn Fusion.<br>Đơn hàng đang được chuẩn bị ngay bây giờ!</p>
+      <div class="order-info-box">
+        <div>
+          <div class="oib-id" id="success-oid">#PGD0001</div>
+          <div class="oib-eta">Dự kiến giao lúc <strong id="success-eta">12:30</strong></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--muted)">Tổng tiền</div>
+          <div style="font-size:16px;font-weight:900;color:var(--orange)" id="success-total"></div>
+        </div>
+      </div>
+      <div class="track-strip">
+        <div class="ts-step done"><div class="ts-dot done">✓</div><div class="ts-lbl done">Đặt hàng</div></div>
+        <div class="ts-step curr"><div class="ts-dot curr">🍳</div><div class="ts-lbl curr">Chế biến</div></div>
+        <div class="ts-step"><div class="ts-dot">🛵</div><div class="ts-lbl">Đang giao</div></div>
+        <div class="ts-step"><div class="ts-dot">🏠</div><div class="ts-lbl">Đã nhận</div></div>
+      </div>
+    </div>
+    <div style="padding:0 1.5rem 1.5rem;display:flex;flex-direction:column;gap:10px">
+      <button class="btn-main" onclick="closeModal('success-modal');showPage('orders')">Theo dõi đơn hàng</button>
+      <button class="btn-out" onclick="closeModal('success-modal')">Tiếp tục mua sắm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Cổng thanh toán (QR) -->
+<div class="ov" id="gateway-modal">
+  <div class="modal" style="max-width:400px; text-align:center;">
+    <button class="modal-close" onclick="closeModal('gateway-modal')">×</button>
+    <div style="margin-bottom:1rem;">
+      <img src="" id="gateway-logo" style="height:40px; object-fit:contain; margin-bottom:10px;">
+      <h3 style="margin:0; color:var(--text);" id="gateway-title">Thanh toán</h3>
+    </div>
+    
+    <div style="background: white; padding: 15px; border-radius: 12px; display:inline-block; margin-bottom: 1rem; border: 1px solid var(--border);">
+      <img src="" id="gateway-qr" style="width: 200px; height: 200px; object-fit:contain; display:block;">
+    </div>
+    
+    <div style="background: var(--surf2); border-radius: 8px; padding: 12px; margin-bottom: 1.5rem; text-align:left; font-size: 14px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="color:var(--muted);">Chủ tài khoản:</span>
+        <strong style="color:var(--text);">TRẦN VĂN ĐẠT</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="color:var(--muted);">Số tài khoản:</span>
+        <strong style="color:var(--text);" id="gateway-account">0987654321</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="color:var(--muted);">Số tiền:</span>
+        <strong style="color:var(--red); font-size:16px;" id="gateway-amount">0đ</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 6px;">
+        <span style="color:var(--muted);">Nội dung CK:</span>
+        <strong style="color:var(--text);" id="gateway-content">ThanhToan</strong>
+      </div>
+    </div>
+    
+    <div style="color:var(--primary); font-weight:600; margin-bottom: 1.5rem; font-size:15px;">
+      ⏳ Đang chờ thanh toán... <span id="gateway-timer">15:00</span>
+    </div>
+    
+    <button class="btn-main" onclick="confirmGatewayPayment()" style="width:100%;">Xác nhận đã chuyển khoản</button>
+    <div style="color:var(--muted); font-size:12px; margin-top:1rem;">* Hệ thống sẽ tự động duyệt ngay sau khi nhận được tiền.</div>
+  </div>
+</div>
+
+<!-- Modal: Mã ưu đãi -->
+<div class="ov" id="promo-modal" onclick="closeOvOutside(event,'promo-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:480px">
+    <button class="modal-close" onclick="closeModal('promo-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem">Danh sách mã ưu đãi</h2>
+    <div id="promo-modal-list"></div>
+  </div>
+</div>
+
+<!-- Modal: Địa chỉ giao hàng -->
+<div class="ov" id="addr-modal" onclick="closeOvOutside(event,'addr-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:460px">
+    <button class="modal-close" onclick="closeModal('addr-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem" id="addr-modal-title">Thêm địa chỉ mới</h2>
+    <input type="hidden" id="addr-modal-key">
+    <div class="form-sec"><label class="f-label">Nhãn địa chỉ</label><input class="f-in" id="addr-modal-label" type="text" placeholder="Nhà, Công ty, Văn phòng..."></div>
+    <div class="form-sec" style="margin-top:1rem"><label class="f-label">Địa chỉ chi tiết</label><input class="f-in" id="addr-modal-value" type="text" placeholder="Số nhà, đường, phường, quận, TP"></div>
+    <button class="btn-main" style="margin-top:1rem" onclick="saveAddressModal()">Lưu địa chỉ</button>
+  </div>
+</div>
+
+<!-- Modal: Đánh giá món ăn -->
+<div class="ov" id="review-modal" onclick="closeOvOutside(event,'review-modal')">
+  <div class="modal" style="padding:2rem;max-width:500px">
+    <button class="modal-close" onclick="closeModal('review-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Đánh giá món ăn</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Đánh giá của bạn sẽ giúp nhà hàng cải thiện chất lượng dịch vụ.</p>
+    <div id="review-items-container" style="display:flex;flex-direction:column;gap:1.25rem"></div>
+    <button class="btn-main" style="margin-top:1.5rem" onclick="submitAllReviews()">Gửi đánh giá</button>
+  </div>
+</div>
+
+<!-- Modal: Giỏ hàng modal (JS render) -->
+<div class="ov" id="cart-modal" onclick="closeOvOutside(event,'cart-modal')">
+  <div class="modal" id="cart-modal-body" style="padding:2rem;max-width:480px"></div>
+</div>
+
