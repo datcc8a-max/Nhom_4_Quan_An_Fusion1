@@ -1,0 +1,22 @@
+/* ── BODY BACKGROUND ── */
+body{
+  position:relative;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at top, rgba(255,154,61,.08), transparent 18%),
+    linear-gradient(180deg, var(--cream) 0%, #fffaf4 50%, var(--cream) 100%);
+  min-height:100vh;
+  opacity:0;
+  transition:opacity .5s;
+}
+body::before,body::after{content:'';position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(6px)}
+body::before{width:260px;height:260px;left:-40px;top:120px;background:radial-gradient(circle,rgba(232,82,26,.08),rgba(232,82,26,0)70%);animation:float 12s ease-in-out infinite}
+body::after{width:320px;height:320px;right:-80px;bottom:120px;background:radial-gradient(circle,rgba(245,158,11,.08),rgba(245,158,11,0)70%);animation:float 14s ease-in-out infinite reverse}
+body.loaded{opacity:1}
+
+/* ── PAGE / GRID LAYOUT ── */
+.page{display:none; animation: fadeIn 0.5s ease-in-out;}
+.page.active{display:block}
+.page-wrap{max-width:1280px;margin:0 auto;padding:2rem 1.5rem}
+.layout{max-width:1280px;margin:0 auto;padding:0 1.5rem 2rem;display:grid;grid-template-columns:1fr;gap:2rem;align-items:start}
+@media(max-width:960px){.layout{grid-template-columns:1fr}}
