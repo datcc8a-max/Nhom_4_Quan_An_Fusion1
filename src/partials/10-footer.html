@@ -1,0 +1,67 @@
+<!-- ═══════════════════════════════
+     FOOTER + SUPPORT CHAT
+     ═══════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Quán ăn Fusion</h3>
+        <p>Đặt món nhanh · Giao hàng tận nơi · Món ăn ngon mỗi ngày.</p>
+      </div>
+      <div>
+        <div class="footer-title">Liên hệ</div>
+        <div class="footer-contact">
+          <span>📞 1800 6868</span>
+          <span>📧 support@phogiadinh.vn</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Địa chỉ</div>
+        <div class="footer-contact">
+          <span>📍 123 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội</span>
+          <span>🕗 Mở cửa: 08:00 – 22:00</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Dịch vụ</div>
+        <ul class="footer-links">
+          <li><a href="#">Giao hàng</a></li>
+          <li><a href="#">Đặt món online</a></li>
+          <li><a href="#">Khuyến mãi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Quán ăn Fusion. Mọi quyền được bảo lưu.</div>
+  </div>
+</footer>
+
+<!-- Support Chat Widget -->
+<div class="support-chat">
+  <div class="support-panel" id="support-panel">
+    <div class="support-panel-header">
+      <strong>Hỗ trợ khách hàng</strong>
+      <button class="support-close" onclick="toggleSupportPanel()">✕</button>
+    </div>
+    <div class="support-panel-body">
+      <div class="support-faq">
+        <button onclick="sendQuickSupport('Làm thế nào để đặt món?')">Đặt món</button>
+        <button onclick="sendQuickSupport('Đơn hàng mất bao lâu?')">Thời gian giao</button>
+        <button onclick="sendQuickSupport('Tôi muốn hủy đơn')">Hủy đơn</button>
+        <button onclick="sendQuickSupport('Có thể thanh toán bằng gì?')">Thanh toán</button>
+      </div>
+      <div class="support-chat-log" id="support-chat-log">
+        <div class="support-msg bot">Xin chào! Tôi có thể giúp bạn tìm thông tin về đặt món, giao hàng hoặc thanh toán.</div>
+      </div>
+      <div class="support-input-row">
+        <input class="support-input" id="support-input" type="text" placeholder="Nhập câu hỏi của bạn..." onkeydown="if(event.key==='Enter') sendSupportMessage()">
+        <button class="support-send" onclick="sendSupportMessage()">Gửi</button>
+      </div>
+      <div class="support-hotline">
+        <span>☎ Hotline</span>
+        <strong>1800 6868</strong>
+      </div>
+    </div>
+  </div>
+  <button class="support-chat-btn" onclick="toggleSupportPanel()">💬</button>
+</div>
+
