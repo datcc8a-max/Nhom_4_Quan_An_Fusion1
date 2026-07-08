@@ -1,0 +1,4 @@
+/* ── HEADER SEARCH (search component) ── */
+/* Note: search input styles in layout/header.css */
+/* Additional search-specific styles below */
+.search-highlight{background:var(--orange-l);color:var(--orange);border-radius:3px;padding:0 2px}
