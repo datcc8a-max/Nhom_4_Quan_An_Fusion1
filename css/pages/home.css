@@ -1,0 +1,7 @@
+/* ── HOME PAGE ── */
+
+/* ── FEATURED BANNER STRIP ── */
+.banner-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2.5rem}
+
+/* ── MENU GRID ── */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;justify-content:center;align-items:stretch;margin:0 auto}
