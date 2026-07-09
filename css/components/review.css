@@ -1,0 +1,24 @@
+/* ── REVIEWS ── */
+.reviews-sec{border-top:1px solid var(--border);padding:1.5rem}
+.rev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.rev-score{display:flex;align-items:flex-end;gap:8px}
+.rev-big{font-size:40px;font-weight:900;color:var(--text);line-height:1}
+.rev-stars-col span{color:var(--yellow);font-size:14px}
+.rev-cnt{font-size:12px;color:var(--muted)}
+.rev-bars{flex:1}
+.rev-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.rev-bar-row small{font-size:11px;color:var(--muted);width:10px;text-align:right}
+.rev-bar-track{flex:1;height:5px;background:var(--surf2);border-radius:99px;overflow:hidden}
+.rev-bar-fill{height:100%;background:var(--yellow);border-radius:99px}
+.rev-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.rev-item:last-child{border-bottom:none}
+.rev-item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.rev-avatar{width:30px;height:30px;border-radius:99px;background:var(--orange-l);color:var(--orange);font-size:13px;font-weight:700;display:grid;place-items:center;margin-right:8px;flex-shrink:0}
+.rev-user{display:flex;align-items:center}
+.rev-name{font-size:13px;font-weight:600}
+.rev-date{font-size:11px;color:var(--muted)}
+.rev-text{font-size:13px;color:var(--muted);line-height:1.55}
+.rev-imgs{display:flex;gap:6px;margin-top:8px}
+.rev-img-thumb{width:52px;height:52px;border-radius:8px;overflow:hidden;border:1px solid var(--border); cursor: pointer; transition: transform .2s;}
+.rev-img-thumb:hover {transform: scale(1.1);}
+.rev-img-thumb img{width:100%;height:100%;object-fit:cover}

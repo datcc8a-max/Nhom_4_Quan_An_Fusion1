@@ -1,0 +1,9 @@
+/* ── TABLET (max-width: 960px) ── */
+@media(max-width:960px){
+  .layout{grid-template-columns:1fr}
+}
+
+/* ── FOOTER TABLET ── */
+@media (max-width: 900px){
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
