@@ -1,0 +1,74 @@
+<!-- ═══════════════════════════════
+     MODALS — Admin
+     ═══════════════════════════════ -->
+
+<!-- Modal: Đăng nhập Admin -->
+<div class="ov" id="admin-login-modal" onclick="closeOvOutside(event,'admin-login-modal')">
+  <div class="modal" style="padding:2rem;max-width:420px">
+    <button class="modal-close" onclick="closeModal('admin-login-modal')">✕</button>
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:40px;margin-bottom:.5rem">🛠️</div>
+      <h2 style="font-size:22px;font-weight:900;color:var(--brown)">Đăng nhập Admin</h2>
+    </div>
+    <div class="form-sec"><label class="f-label">Tên đăng nhập</label><input class="f-in" id="admin-user" type="text" value="admin"></div>
+    <div class="form-sec" style="margin-top:1rem"><label class="f-label">Mật khẩu</label><input class="f-in" id="admin-pass" type="password" value="admin123"></div>
+    <button class="btn-main" style="margin-top:1rem" onclick="doAdminLogin()">Đăng nhập</button>
+  </div>
+</div>
+
+<!-- Modal: Thêm / sửa mã khuyến mãi -->
+<div class="ov" id="admin-promo-modal" onclick="closeOvOutside(event,'admin-promo-modal')">
+  <div class="modal" style="padding:1.5rem;max-width:460px">
+    <button class="modal-close" onclick="closeModal('admin-promo-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem" id="admin-promo-title">Thêm mã khuyến mãi</h2>
+    <div class="admin-form-grid">
+      <div class="form-sec full"><label class="f-label">Mã khuyến mãi</label><input class="f-in" id="admin-promo-code" type="text" placeholder="SALE20"></div>
+      <div class="form-sec"><label class="f-label">Loại</label>
+        <select class="admin-select" id="admin-promo-type">
+          <option value="percent">Phần trăm</option>
+          <option value="fixed">Giảm tiền</option>
+          <option value="ship">Miễn phí ship</option>
+        </select>
+      </div>
+      <div class="form-sec"><label class="f-label">Giá trị</label><input class="f-in" id="admin-promo-value" type="number" placeholder="20"></div>
+      <div class="form-sec full"><label class="f-label">Mô tả</label><input class="f-in" id="admin-promo-label" type="text" placeholder="Giảm 20% cho đơn từ 100k"></div>
+    </div>
+    <button class="btn-main" style="margin-top:1rem" onclick="saveAdminPromo()">Lưu mã</button>
+  </div>
+</div>
+
+<!-- Modal: Thêm / sửa món ăn -->
+<div class="ov" id="admin-item-modal" onclick="closeOvOutside(event,'admin-item-modal')">
+  <div class="modal" style="padding:2rem;max-width:520px">
+    <button class="modal-close" onclick="closeModal('admin-item-modal')">✕</button>
+    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:1rem" id="admin-item-title">Thêm món mới</h2>
+    <div class="admin-form-grid">
+      <div class="form-sec full"><label class="f-label">Tên món</label><input class="f-in" id="admin-item-name" type="text"></div>
+      <div class="form-sec"><label class="f-label">Danh mục</label>
+        <select class="admin-select" id="admin-item-cat">
+          <option value="pho">Phở &amp; Bún</option>
+          <option value="com">Cơm</option>
+          <option value="banh">Bánh</option>
+          <option value="nuoc">Đồ uống</option>
+          <option value="trangmieng">Tráng miệng</option>
+          <option value="khuyen-mai">Khuyến mãi</option>
+        </select>
+      </div>
+      <div class="form-sec"><label class="f-label">Giá</label><input class="f-in" id="admin-item-price" type="number"></div>
+      <div class="form-sec"><label class="f-label">Giá cũ</label><input class="f-in" id="admin-item-old" type="number" placeholder="(không bắt buộc)"></div>
+      <div class="form-sec"><label class="f-label">Ảnh URL</label><input class="f-in" id="admin-item-img" type="text" placeholder="https://..."></div>
+      <div class="form-sec"><label class="f-label">Badge</label>
+        <select class="admin-select" id="admin-item-badge">
+          <option value="">Không có</option>
+          <option value="Bestseller">Bestseller</option>
+          <option value="New">New</option>
+          <option value="Sale">Sale</option>
+        </select>
+      </div>
+      <div class="form-sec full"><label class="f-label">Mô tả</label><textarea class="admin-textarea" id="admin-item-desc" rows="3"></textarea></div>
+      <div class="form-sec full"><label class="f-label">Tùy chỉnh (phân cách bằng dấu ,)</label><input class="f-in" id="admin-item-toppings" type="text" placeholder="Thêm hành,Không hành"></div>
+    </div>
+    <button class="btn-main" style="margin-top:1rem" onclick="saveAdminItem()">Lưu món</button>
+  </div>
+</div>
+
