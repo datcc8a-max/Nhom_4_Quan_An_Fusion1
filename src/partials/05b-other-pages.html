@@ -1,0 +1,261 @@
+<!-- ══════════════ PAGE: ORDERS ══════════════ -->
+<div id="page-orders" class="page">
+  <div class="page-wrap">
+    <div id="orders-guest" style="display:block">
+      <div style="text-align:center;padding:3rem 1rem;background:var(--surf);border:1px solid var(--border);border-radius:var(--r-lg)">
+        <div style="font-size:72px;margin-bottom:1rem">📋</div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:.5rem">Đơn hàng của bạn</h2>
+        <p style="color:var(--muted);margin-bottom:1.5rem">Vui lòng đăng nhập để xem lịch sử và theo dõi đơn hàng</p>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <button class="btn-main" style="max-width:180px" onclick="openLoginModal('login')">Đăng nhập</button>
+          <button class="btn-out" style="max-width:180px" onclick="openLoginModal('register')">Đăng ký</button>
+        </div>
+      </div>
+    </div>
+    <div id="orders-logged" style="display:none">
+      <div class="sec-head" style="margin-bottom:1.5rem"><span class="sec-title">Lịch sử đơn hàng</span></div>
+      <div class="orders-filter">
+        <button class="of-btn active" onclick="filterOrders('all',this)">Tất cả</button>
+        <button class="of-btn" onclick="filterOrders('pending',this)">Đang xử lý</button>
+        <button class="of-btn" onclick="filterOrders('delivering',this)">Đang giao</button>
+        <button class="of-btn" onclick="filterOrders('done',this)">Hoàn thành</button>
+        <button class="of-btn" onclick="filterOrders('cancelled',this)">Đã hủy</button>
+      </div>
+      <div id="orders-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: PROFILE ══════════════ -->
+<div id="page-profile" class="page">
+  <div class="page-wrap" style="max-width:700px">
+    <div id="profile-guest">
+      <div style="text-align:center;padding:3rem 1rem">
+        <div style="font-size:72px;margin-bottom:1rem">👤</div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:.5rem">Chào mừng bạn!</h2>
+        <p style="color:var(--muted);margin-bottom:1.5rem">Đăng nhập để theo dõi đơn hàng và tích điểm thành viên</p>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <button class="btn-main" style="max-width:180px" onclick="openLoginModal('login')">Đăng nhập</button>
+          <button class="btn-out" style="max-width:180px" onclick="openLoginModal('register')">Đăng ký</button>
+        </div>
+      </div>
+    </div>
+    <div id="profile-logged" style="display:none">
+      <div class="profile-banner">
+        <div class="p-avatar-wrap">
+          <div class="p-avatar" id="p-av">?</div>
+          <button class="p-avatar-edit" onclick="triggerAvatarUpload()">✏️</button>
+          <input type="file" id="p-avatar-file-input" style="display:none" accept="image/*" onchange="handleAvatarFileSelect(event)">
+        </div>
+        <div style="flex:1">
+          <div class="p-name" id="p-display-name">Tên người dùng</div>
+          <div class="p-phone" id="p-display-phone">Chưa cập nhật số điện thoại</div>
+          <div class="p-badges" id="profile-badges-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+        <button style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px" onclick="openModal('logout-modal')">
+          <span>↩</span>
+          <span>Đăng xuất</span>
+        </button>
+      </div>
+
+      <div class="profile-stats">
+        <div class="p-stat"><span class="p-stat-val" id="ps-orders">0</span><div class="p-stat-lbl">Đơn hàng</div></div>
+        <div class="p-stat"><span class="p-stat-val" id="ps-points">0</span><div class="p-stat-lbl">Điểm tích lũy</div></div>
+        <div class="p-stat"><span class="p-stat-val" id="ps-saved">0đ</span><div class="p-stat-lbl">Đã tiết kiệm</div></div>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">⚙️ Thông tin cá nhân</div>
+        <div class="f-row" style="margin-bottom:1rem">
+          <div class="form-sec"><label class="f-label">Họ</label><input class="f-in" type="text" id="pf-first" placeholder="Nguyễn"></div>
+          <div class="form-sec"><label class="f-label">Tên</label><input class="f-in" type="text" id="pf-last" placeholder="Văn A"></div>
+        </div>
+        <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Số điện thoại</label><input class="f-in" id="pf-phone" type="text" placeholder="0912 345 678"></div>
+        <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Email</label><input class="f-in" id="pf-email" type="email" placeholder="email@gmail.com"></div>
+        <div class="form-sec" style="margin-bottom:1.25rem"><label class="f-label">Ngày sinh</label><input class="f-in" id="pf-birth" type="date"></div>
+        <button class="btn-main" onclick="saveProfile()">Lưu thay đổi</button>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">📍 Địa chỉ giao hàng</div>
+        <div id="profile-address-list"></div>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">💳 Thanh toán & Ưu đãi</div>
+        <div class="menu-list-item" onclick="showToast('💰 Số dư ví đang cập nhật')">
+          <div class="mli-left"><div class="mli-icon">💰</div><div><div class="mli-label">Ví Quán ăn Fusion</div><div class="mli-sub" id="wallet-balance">Số dư: 0đ</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+        <div class="menu-list-item" onclick="showToast('🎁 Bạn đang có 2 mã khuyến mãi khả dụng')">
+          <div class="mli-left"><div class="mli-icon">🎁</div><div><div class="mli-label">Mã ưu đãi</div><div class="mli-sub" id="promo-count">2 mã đang hoạt động</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+        <div class="menu-list-item" onclick="showToast('⭐ Tích điểm để đổi ưu đãi')">
+          <div class="mli-left"><div class="mli-icon">⭐</div><div><div class="mli-label">Điểm thành viên</div><div class="mli-sub" id="point-summary">0 điểm → đổi được 0đ</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="ps-title">🔔 Cài đặt</div>
+        <div class="menu-list-item" onclick="toggleNotification('order')">
+          <div class="mli-left"><div class="mli-icon">🔔</div><div><div class="mli-label">Thông báo đơn hàng</div><div class="mli-sub">Nhận cập nhật khi đơn đang xử lý</div></div></div>
+          <span id="notify-order" style="font-size:12px;font-weight:700;color:var(--orange)">BẬT</span>
+        </div>
+        <div class="menu-list-item" onclick="toggleNotification('promo')">
+          <div class="mli-left"><div class="mli-icon">🎁</div><div><div class="mli-label">Thông báo khuyến mãi</div><div class="mli-sub">Nhận mã giảm giá mới</div></div></div>
+          <span id="notify-promo" style="font-size:12px;font-weight:700;color:var(--orange)">BẬT</span>
+        </div>
+        <div class="menu-list-item" id="profile-change-pw-btn" onclick="openPasswordSection()">
+          <div class="mli-left"><div class="mli-icon">🔒</div><div><div class="mli-label">Đổi mật khẩu</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+        <div id="password-section" style="display:none;margin-top:1rem;padding:1rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surf)">
+          <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Mật khẩu cũ</label><input class="f-in" id="pw-old" type="password"></div>
+          <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Mật khẩu mới</label><input class="f-in" id="pw-new" type="password"></div>
+          <div class="form-sec" style="margin-bottom:1rem"><label class="f-label">Nhập lại mật khẩu mới</label><input class="f-in" id="pw-confirm" type="password"></div>
+          <button class="btn-main" onclick="changePassword()">Đổi mật khẩu</button>
+        </div>
+        <div class="menu-list-item" onclick="showToast('📞 Liên hệ hỗ trợ: 1800-6868')">
+          <div class="mli-left"><div class="mli-icon">📞</div><div><div class="mli-label">Hỗ trợ khách hàng</div><div class="mli-sub">1800-6868 · 24/7</div></div></div>
+          <span class="mli-arrow">›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE: ADMIN ══════════════ -->
+<div id="page-admin" class="page">
+  <div class="page-wrap">
+    <div id="admin-locked" style="display:none">
+      <div class="empty-state" style="padding:4rem 1rem">
+        <div class="empty-state-icon">🔐</div>
+        <h3>Admin chưa đăng nhập</h3>
+        <p>Vui lòng đăng nhập bằng tài khoản quản trị để mở bảng điều khiển</p>
+        <button class="btn-main" style="max-width:220px;margin:1rem auto 0" onclick="openModal('admin-login-modal')">Đăng nhập Admin</button>
+      </div>
+    </div>
+    <div id="admin-dashboard" style="display:none">
+      <div class="admin-shell">
+        <aside class="admin-sidebar">
+          <h3>Quản trị</h3>
+          <button class="admin-side-btn active" onclick="switchAdminPanel('overview',this)"><img src="images/admin/overview.png" alt="Tổng quan"> Tổng quan</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('orders',this)"><img src="images/admin/orders.png" alt="Đơn hàng"> Đơn hàng</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('items',this)"><img src="images/admin/products.png" alt="Sản phẩm"> Sản phẩm</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('promos',this)"><img src="images/category/khuyenmai.png" alt="Khuyến mãi"> Khuyến mãi</button>
+          <button class="admin-side-btn" onclick="switchAdminPanel('reports',this)"><img src="images/admin/reports.png" alt="Báo cáo"> Báo cáo</button>
+          <button class="admin-side-btn" style="margin-top:.5rem;color:var(--red)" onclick="logoutAdmin()"><img src="images/admin/logout.png" alt="Đăng xuất"> Đăng xuất</button>
+        </aside>
+        <section class="admin-main">
+          <div class="admin-panel active" id="admin-panel-overview">
+            <div class="admin-panel-head">
+              <div>
+                <div class="sec-title">Tổng quan hôm nay</div>
+                <div style="font-size:12px;color:var(--muted)">Cập nhật lúc <span id="admin-now"></span></div>
+              </div>
+              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminItemModal()">➕ Thêm món</button>
+            </div>
+            <div class="admin-stats">
+              <div class="admin-stat"><strong id="admin-stat-orders">0</strong><span>Đơn hôm nay</span></div>
+              <div class="admin-stat"><strong id="admin-stat-revenue">0đ</strong><span>Doanh thu</span></div>
+              <div class="admin-stat"><strong id="admin-stat-items">0</strong><span>Món đang bán</span></div>
+              <div class="admin-stat"><strong id="admin-stat-pending">0</strong><span>Đơn chờ xử lý</span></div>
+            </div>
+            <div class="admin-form-grid" style="margin-top:1rem">
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">📦 Đơn gần đây</div>
+                <div id="admin-recent-orders"></div>
+              </div>
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">🍽 Top bán chạy</div>
+                <div id="admin-top-items"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-orders">
+            <div class="admin-panel-head">
+              <div class="sec-title">Quản lý đơn hàng</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <input class="admin-input" id="admin-order-search" type="search" placeholder="Tìm mã / khách / SĐT" style="max-width:240px" oninput="renderAdminOrders()">
+                <select class="admin-select" id="admin-order-filter" style="max-width:180px" onchange="renderAdminOrders()">
+                  <option value="all">Tất cả</option>
+                  <option value="pending">Đang xử lý</option>
+                  <option value="delivering">Đang giao</option>
+                  <option value="done">Hoàn thành</option>
+                  <option value="cancelled">Đã hủy</option>
+                </select>
+                <select class="admin-select" id="admin-date-filter" style="max-width:150px" onchange="renderAdminOrders()">
+                  <option value="all">Tất cả ngày</option>
+                  <option value="today">Hôm nay</option>
+                  <option value="7days">7 ngày qua</option>
+                  <option value="30days">30 ngày qua</option>
+                </select>
+                <button class="btn-main" style="width:auto;padding:10px 14px" onclick="exportAdminOrders()">📤 Xuất CSV</button>
+              </div>
+            </div>
+            <div id="admin-orders-table"></div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-items">
+            <div class="admin-panel-head">
+              <div class="sec-title">Quản lý món ăn</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <input class="admin-input" id="admin-item-search" type="search" placeholder="Tìm món ăn" style="max-width:240px" oninput="renderAdminItems()">
+                <select class="admin-select" id="admin-item-category" style="max-width:180px" onchange="renderAdminItems()">
+                  <option value="all">Tất cả danh mục</option>
+                  <option value="pho">Phở</option>
+                  <option value="com">Cơm</option>
+                  <option value="bun">Bún</option>
+                  <option value="banhmi">Bánh mì</option>
+                  <option value="drink">Đồ uống</option>
+                </select>
+                <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminItemModal()">➕ Thêm món</button>
+              </div>
+            </div>
+            <div id="admin-items-table"></div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-promos">
+            <div class="admin-panel-head">
+              <div class="sec-title">Khuyến mãi</div>
+              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminPromoModal()">➕ Thêm mã</button>
+            </div>
+            <div class="profile-section" style="margin:0">
+              <div class="ps-title">Danh sách mã</div>
+              <div id="admin-promo-list"></div>
+            </div>
+          </div>
+
+          <div class="admin-panel" id="admin-panel-reports">
+            <div class="admin-panel-head">
+              <div class="sec-title">Báo cáo bán hàng</div>
+              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="exportAdminOrders()">📤 Xuất báo cáo</button>
+            </div>
+            <div class="admin-stats">
+              <div class="admin-stat"><strong id="admin-report-total-orders">0</strong><span>Tổng đơn</span></div>
+              <div class="admin-stat"><strong id="admin-report-revenue">0đ</strong><span>Doanh thu</span></div>
+              <div class="admin-stat"><strong id="admin-report-complete">0%</strong><span>Tỷ lệ hoàn thành</span></div>
+              <div class="admin-stat"><strong id="admin-report-cancel">0</strong><span>Đơn hủy</span></div>
+            </div>
+            <div class="admin-form-grid" style="margin-top:1rem">
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">📊 Top món bán chạy</div>
+                <div id="admin-report-top-items"></div>
+              </div>
+              <div class="profile-section" style="margin:0">
+                <div class="ps-title">🗂 Trạng thái đơn hàng</div>
+                <div id="admin-report-status"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
