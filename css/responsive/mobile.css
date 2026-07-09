@@ -1,0 +1,23 @@
+/* ── MOBILE (max-width: 680px) ── */
+@media(max-width:680px){
+  .hero-content{padding:2rem 1.5rem}
+  .hero h1{font-size:26px}
+  .hero-chips{display:none}
+  .banner-strip{grid-template-columns:1fr}
+  .profile-stats{grid-template-columns:repeat(3,1fr)}
+  .nav-btn span{display:none}
+  .header-loc{display:none}
+  .header-search{max-width:none;flex:1}
+}
+
+/* ── FOOTER MOBILE ── */
+@media (max-width: 560px){
+  .footer-grid{grid-template-columns:1fr}
+  .site-footer{padding-top:2.5rem}
+}
+
+/* ── AUTH PAGE MOBILE ── */
+@media (max-width: 480px){
+  .f-row{grid-template-columns:1fr}
+  .auth-card{padding:28px 18px}
+}
