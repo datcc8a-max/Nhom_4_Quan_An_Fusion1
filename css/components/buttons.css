@@ -1,0 +1,28 @@
+/* ── SHARED BUTTONS ── */
+.btn-main{width:100%;background:linear-gradient(90deg,var(--orange),#ff7a3d);color:#fff;border:none;padding:14px;border-radius:var(--r-sm);font-size:15px;font-weight:800;transition:all .2s;box-shadow:0 4px 14px rgba(232,82,26,.3);position:relative;overflow:hidden}
+.btn-main:hover{background:linear-gradient(90deg,var(--orange-d),var(--orange));transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,82,26,.4)}
+.btn-out{width:100%;background:none;color:var(--brown);border:1.5px solid var(--border);padding:12px;border-radius:var(--r-sm);font-size:14px;font-weight:600;transition:all .2s;margin-top:10px}
+.btn-out:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-l)}
+.add-cart-btn{width:100%;background:var(--orange);color:#fff;border:none;padding:16px;border-radius:var(--r-sm);font-size:15px;font-weight:800;transition:all .2s;box-shadow:0 4px 14px rgba(232,82,26,.35)}
+.add-cart-btn:hover{background:var(--orange-d); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,82,26,.45);}
+.soc-btn{width:100%;background:var(--surf2);border:1.5px solid var(--border);color:var(--text);padding:12px;border-radius:var(--r-sm);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;margin-bottom:8px}
+.soc-btn:hover{border-color:var(--orange);background:var(--orange-l); transform: translateY(-1px);}
+.of-btn{background:var(--surf);border:1.5px solid var(--border);border-radius:99px;padding:7px 16px;font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap;transition:all .2s}
+.of-btn:hover,.of-btn.active{border-color:var(--orange);color:var(--orange);background:var(--orange-l)}
+
+/* ── PAYMENT ICONS & BADGES ── */
+.pay-icon{width:20px;height:20px;object-fit:contain}
+.pay-icon-app{width:24px;height:24px;object-fit:contain;flex-shrink:0}
+.pay-icon-stack{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.pay-badge{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:10px;font-weight:800;letter-spacing:.04em;color:#fff;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.pay-badge-cod{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.pay-badge-momo{background:linear-gradient(135deg,#a50064,#d6007a)}
+.pay-badge-zalo{background:linear-gradient(135deg,#0068ff,#00a0ff)}
+.pay-badge-vnpay{background:linear-gradient(135deg,#0a7d5c,#18b36b)}
+.pay-badge-card{background:linear-gradient(135deg,#1f2937,#4b5563)}
+.pay-badge-bank{background:linear-gradient(135deg,#7c3aed,#a78bfa)}
+.pay-brand{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:8px;font-weight:800;letter-spacing:.04em;color:#fff;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.pay-brand-momo{background:linear-gradient(135deg,#a50064,#d6007a)}
+.pay-brand-zalo{background:linear-gradient(135deg,#0068ff,#00a0ff)}
+.pay-brand-vnpay{background:linear-gradient(135deg,#0a7d5c,#18b36b)}
+img.pay-badge { width: 26px; height: 26px; border-radius: 4px; object-fit: contain; background: transparent; box-shadow: none; padding: 2px; }
