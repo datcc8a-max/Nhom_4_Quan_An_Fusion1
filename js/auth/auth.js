@@ -48,12 +48,16 @@ function doRegister(){
   users.push(newUser);
   localStorage.setItem('pgd_users', JSON.stringify(users));
 
-  currentUser = newUser;
-  loggedIn = true;
-  userName = `${fn} ${ln}`.trim();
-  userPhone = ph;
-  localStorage.setItem('pgd_current_user', JSON.stringify(currentUser));
-  finishLogin();
+  showToast('✅ Đăng ký thành công! Vui lòng đăng nhập.', true);
+  setTimeout(() => {
+    if (typeof switchTab === 'function') {
+      switchTab('login');
+      const lUser = document.getElementById('l-user');
+      if (lUser) lUser.value = email || ph;
+    } else if (typeof openLoginModal === 'function') {
+      openLoginModal('login');
+    }
+  }, 1000);
 }
 function doSocialLogin(provider){
   const authUrls = {
