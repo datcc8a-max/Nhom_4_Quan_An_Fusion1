@@ -18,7 +18,7 @@ function doLogin() {
   }
   storageSet(STORAGE_KEYS.CURRENT_USER, found);
   if (msg) { msg.textContent = '✅ Đăng nhập thành công! Đang chuyển…'; msg.className = 'msg ok'; }
-  setTimeout(() => { window.history.back(); }, 800);
+  setTimeout(() => { window.location.reload(); }, 800);
 }
 
 window.doLogin = doLogin;

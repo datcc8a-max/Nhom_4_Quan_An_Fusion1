@@ -157,6 +157,7 @@
     document.getElementById('notify-order').textContent = (profilePrefs.notifyOrder === false ? 'TẮT' : 'BẬT');
     document.getElementById('notify-promo').textContent = (profilePrefs.notifyPromo === false ? 'TẮT' : 'BẬT');
     renderAddressList();
+    if(typeof renderProfileFavs === 'function') renderProfileFavs();
   }
 
   function saveProfile(){

@@ -109,7 +109,7 @@ window.completeSocialLogin = function(provider, email, name, avatar) {
   }
 
   // Quay lại trang chủ sau 1 giây
-  setTimeout(() => { window.location.href = '../../index.html'; }, 1000);
+  setTimeout(() => { window.location.reload(); }, 1000);
 };
 
 window.doSocialLogin = doSocialLogin;

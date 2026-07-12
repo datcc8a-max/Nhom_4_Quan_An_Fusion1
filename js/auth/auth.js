@@ -94,10 +94,21 @@ function finishLogin(){
   showPage('profile');
 }
 function openLoginModal(tab = 'login'){
-  const target = tab === 'register'
-    ? 'src/partials/auth.html?tab=register'
-    : 'src/partials/auth.html?tab=login';
-  window.location.href = target;
+  showPage('auth');
+  switchTab(tab);
+}
+
+function switchTab(tab) {
+  const loginPanel = document.getElementById('login-panel');
+  const regPanel = document.getElementById('register-panel');
+  const forgotPanel = document.getElementById('forgot-panel');
+  if(loginPanel) loginPanel.style.display = tab === 'login' ? '' : 'none';
+  if(regPanel) regPanel.style.display = tab === 'register' ? '' : 'none';
+  if(forgotPanel) forgotPanel.style.display = 'none';
+
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const activeTab = document.getElementById('tab-' + tab);
+  if (activeTab) activeTab.classList.add('active');
 }
 function clearAuthState(){
   loggedIn = false;
@@ -222,6 +233,7 @@ function updateProfileUI(){
   document.getElementById('notify-order').textContent=(profilePrefs.notifyOrder === false ? 'TẮT' : 'BẬT');
   document.getElementById('notify-promo').textContent=(profilePrefs.notifyPromo === false ? 'TẮT' : 'BẬT');
   renderAddressList();
+  if(typeof renderProfileFavs === 'function') renderProfileFavs();
 }
 
 function triggerAvatarUpload() {
