@@ -45,10 +45,32 @@ function doRegister() {
   };
   users.push(newUser);
   storageSet(STORAGE_KEYS.USERS, users);
-  storageSet(STORAGE_KEYS.CURRENT_USER, newUser);
-
-  if (msg) { msg.textContent = '✅ Tạo tài khoản thành công! Đang chuyển…'; msg.className = 'msg ok'; }
-  setTimeout(() => { window.history.back(); }, 800);
+  
+  if (msg) { 
+    msg.textContent = '✅ Tạo tài khoản thành công! Vui lòng đăng nhập.'; 
+    msg.className = 'msg ok'; 
+  }
+  
+  setTimeout(() => { 
+    // Reset form
+    if(document.getElementById('r-first')) document.getElementById('r-first').value = '';
+    if(document.getElementById('r-last')) document.getElementById('r-last').value = '';
+    if(document.getElementById('r-phone')) document.getElementById('r-phone').value = '';
+    if(document.getElementById('r-email')) document.getElementById('r-email').value = '';
+    if(document.getElementById('r-pass')) document.getElementById('r-pass').value = '';
+    if(document.getElementById('r-confirm')) document.getElementById('r-confirm').value = '';
+    if (msg) msg.textContent = '';
+    
+    // Switch to login tab if available
+    if (typeof switchTab === 'function') {
+      switchTab('login');
+      // Prefill login username
+      const lUser = document.getElementById('l-user');
+      if (lUser) lUser.value = email || phone;
+    } else {
+      window.history.back(); 
+    }
+  }, 1000);
 }
 
 window.doRegister = doRegister;
