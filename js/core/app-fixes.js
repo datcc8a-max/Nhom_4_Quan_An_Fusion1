@@ -76,12 +76,7 @@
       };
     }
 
-    window.openCheckout = function(){
-      if(!loggedIn){ showToast('Vui lòng đăng nhập để thanh toán','','err'); return window.showModal ? window.showModal('auth-modal') : null; }
-      const checkoutPage = document.getElementById('checkout-page');
-      if(checkoutPage) checkoutPage.classList.add('active');
-      if(typeof window.openModal === 'function') window.openModal('ck-modal');
-    };
+    // Đã xoá override window.openCheckout vì nó làm hỏng logic auto-fill ở checkout.js
 
   }
 
