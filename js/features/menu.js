@@ -199,10 +199,10 @@ function renderItemDetail(){
 
   const reviews=[
     ...itemReviews,
-    {name:'Minh Tú',date:'12/06/2025',text:'Phở ngon lắm, nước dùng đậm đà, giao hàng nhanh! Lần sau sẽ order thêm.',stars:5,imgs:['https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=80&h=80&fit=crop']},
-    {name:'Lan Anh',date:'08/06/2025',text:'Món ăn rất ngon, đóng gói cẩn thận, còn nóng khi nhận. Sẽ ủng hộ tiếp!',stars:5,imgs:[]},
-    {name:'Hùng Mạnh',date:'01/06/2025',text:'Chất lượng ổn, giao hơi chậm hơn dự kiến nhưng đồ ăn vẫn nóng và ngon.',stars:4,imgs:['https://images.unsplash.com/photo-1547592180-85f173990554?w=80&h=80&fit=crop']},
-    {name:'Thu Hương',date:'25/05/2025',text:'Đặt lần đầu mà ưng quá, cơm tấm ngon hơn ngoài hàng. Sẽ thành khách quen!',stars:5,imgs:[]},
+    {name:'Minh Tú',date:'12/06/2026',text:'Phở ngon lắm, nước dùng đậm đà, giao hàng nhanh! Lần sau sẽ order thêm.',stars:5,imgs:['https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=80&h=80&fit=crop']},
+    {name:'Lan Anh',date:'08/06/2026',text:'Món ăn rất ngon, đóng gói cẩn thận, còn nóng khi nhận. Sẽ ủng hộ tiếp!',stars:5,imgs:[]},
+    {name:'Hùng Mạnh',date:'01/06/2026',text:'Chất lượng ổn, giao hơi chậm hơn dự kiến nhưng đồ ăn vẫn nóng và ngon.',stars:4,imgs:['https://images.unsplash.com/photo-1547592180-85f173990554?w=80&h=80&fit=crop']},
+    {name:'Thu Hương',date:'25/05/2026',text:'Đặt lần đầu mà ưng quá, cơm tấm ngon hơn ngoài hàng. Sẽ thành khách quen!',stars:5,imgs:[]},
   ];
 
   document.getElementById('item-modal-body').innerHTML=`
