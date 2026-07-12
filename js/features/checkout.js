@@ -33,6 +33,40 @@ function openCheckout(){
   document.querySelectorAll('.pay-opt').forEach((opt)=>opt.classList.remove('sel'));
   const firstOpt=document.querySelector('#pay-opts .pay-opt');
   if(firstOpt) firstOpt.classList.add('sel');
+
+  if(!loggedIn){
+    showToast('Vui lòng đăng nhập để thanh toán','','err'); 
+    if (typeof window.showModal === 'function') window.showModal('auth-modal');
+    return;
+  }
+
+  try {
+    const ckName = document.getElementById('ck-name');
+    const ckPhone = document.getElementById('ck-phone');
+    const ckAddr = document.getElementById('ck-addr');
+    const ckEmail = document.querySelector('input[type="email"]'); // Trường email tuỳ chọn
+
+    if(ckName) {
+      let fullName = (currentUser.firstName || '') + (currentUser.lastName ? ' ' + currentUser.lastName : '');
+      ckName.value = fullName.trim() || currentUser.username || '';
+    }
+    if(ckPhone) {
+      ckPhone.value = currentUser.phone || '';
+    }
+    if(ckAddr) {
+      let firstAddr = '';
+      if(typeof addresses === 'object' && Object.keys(addresses).length > 0){
+        firstAddr = Object.values(addresses)[0];
+      }
+      ckAddr.value = firstAddr;
+    }
+    if(ckEmail) {
+      ckEmail.value = currentUser.email || '';
+    }
+  } catch (err) {
+    console.error("Lỗi auto-fill:", err);
+  }
+
   openModal('ck-modal');
 }
 
@@ -69,15 +103,7 @@ function updCheckoutTotal(){
   const nameInput=document.getElementById('ck-name');
   const phoneInput=document.getElementById('ck-phone');
   const addrInput=document.getElementById('ck-addr');
-  if(nameInput) nameInput.value = loggedIn ? userName : (nameInput.value || '');
-  if(phoneInput) phoneInput.value = loggedIn ? userPhone||'' : (phoneInput.value || '');
-  if(addrInput){
-    const savedAddress = loggedIn
-      ? (addresses && Object.values(addresses).find(v => typeof v === 'string' && v.trim()) || '')
-      : '';
-    const fallbackAddr = savedAddress || (userLocation ? userLocationLabel : '');
-    addrInput.value = addrInput.value || fallbackAddr || '';
-  }
+  // Auto-fill logic moved to openCheckout() to prevent stale data overwriting
 }
 
 function selPay(el,v){
