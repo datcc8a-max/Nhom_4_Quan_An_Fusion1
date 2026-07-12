@@ -153,10 +153,64 @@ function filterCatById(cat){
 function sortMenu(v){curSort=v;renderMenu()}
 
 function toggleFav(id,btn){
-  if(favs.has(id)){favs.delete(id);btn.classList.remove('liked');btn.textContent='🤍';showToast('Đã bỏ yêu thích')}
-  else{favs.add(id);btn.classList.add('liked');btn.textContent='❤️';showToast('❤️ Đã thêm vào yêu thích',true)}
+  if(favs.has(id)){
+    favs.delete(id);
+    if(btn){ btn.classList.remove('liked'); btn.textContent='🤍'; }
+    showToast('Đã bỏ yêu thích');
+  } else{
+    favs.add(id);
+    if(btn){ btn.classList.add('liked'); btn.textContent='❤️'; }
+    showToast('❤️ Đã thêm vào yêu thích',true);
+  }
   saveUserScopedData('favs', [...favs]);
+  if(typeof renderProfileFavs === 'function') renderProfileFavs();
+  
+  // Re-render menu to update heart icons
+  renderMenu();
 }
+
+window.renderProfileFavs = function() {
+  const container = document.getElementById('profile-favs-list');
+  const countEl = document.getElementById('profile-favs-count');
+  if(countEl) countEl.textContent = favs.size;
+  
+  if(!container) return;
+  if(favs.size === 0) {
+    container.innerHTML = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:1rem;">Chưa có món ăn yêu thích nào</div>';
+    return;
+  }
+  let html = '';
+  for(let id of favs) {
+    const item = (window.MENU||[]).find(i => i.id === id);
+    if(!item) continue;
+    html += `
+      <div class="menu-list-item" style="border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--surf)">
+        <div class="mli-left" onclick="openItemById(${item.id})" style="flex:1; cursor:pointer;">
+          <img src="${item.img}" style="width:50px;height:50px;object-fit:cover;border-radius:8px">
+          <div>
+            <div class="mli-label">${item.name}</div>
+            <div class="mli-sub">${fmt(item.price)}</div>
+          </div>
+        </div>
+        <button onclick="toggleFav(${item.id}, this)" style="background:none;border:none;font-size:20px;cursor:pointer">❤️</button>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+};
+
+window.toggleProfileFavs = function() {
+  const list = document.getElementById('profile-favs-list');
+  const icon = document.getElementById('profile-favs-toggle-icon');
+  if (!list) return;
+  if (list.style.display === 'none') {
+    list.style.display = 'grid';
+    if(icon) icon.textContent = '▲';
+  } else {
+    list.style.display = 'none';
+    if(icon) icon.textContent = '▼';
+  }
+};
 
 // ── ITEM DETAIL ──
 function openItemById(id){openItemDetail(id)}

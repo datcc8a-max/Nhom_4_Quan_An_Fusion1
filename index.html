@@ -35,6 +35,7 @@
 <link rel="stylesheet" href="css/pages/profile.css">
 <link rel="stylesheet" href="css/pages/cart-page.css">
 <link rel="stylesheet" href="css/pages/checkout.css">
+<link rel="stylesheet" href="css/pages/auth.css">
 <!-- Responsive -->
 <link rel="stylesheet" href="css/responsive/desktop.css">
 <link rel="stylesheet" href="css/responsive/tablet.css">
@@ -380,6 +381,16 @@
       </div>
 
       <div class="profile-section">
+        <div class="ps-title" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleProfileFavs()">
+          <span>❤️ Món ăn yêu thích (<span id="profile-favs-count">0</span>)</span>
+          <span id="profile-favs-toggle-icon">▼</span>
+        </div>
+        <div id="profile-favs-list" style="display:none; grid-template-columns:1fr; gap:1rem; margin-top:1rem;">
+           <div style="color:var(--muted);font-size:13px;text-align:center;padding:1rem;">Chưa có món ăn yêu thích nào</div>
+        </div>
+      </div>
+
+      <div class="profile-section">
         <div class="ps-title">📍 Địa chỉ giao hàng</div>
         <div id="profile-address-list"></div>
       </div>
@@ -429,15 +440,122 @@
   </div>
 </div>
 
+<!-- ══════════════ PAGE: AUTH ══════════════ -->
+<div id="page-auth" class="page">
+  <div class="page-wrap" style="display:flex; justify-content:center; align-items:center; min-height:80vh">
+    <div class="auth-card" style="margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+      <div class="logo">
+        <img src="images/logo-fusion.png" alt="Logo" class="logo-icon" style="height: 80px; width: 80px; object-fit: contain; border-radius: 12px; margin-bottom: 10px;">
+        <h2>Quán ăn Fusion</h2>
+        <p>Đăng nhập để đặt hàng và tích điểm</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="tab-login" onclick="switchTab('login')">Đăng nhập</button>
+        <button class="tab" id="tab-register" onclick="switchTab('register')">Đăng ký</button>
+      </div>
+
+      <!-- Form đăng nhập -->
+      <div id="login-panel">
+        <div class="form-sec">
+          <label class="f-label">Tài khoản</label>
+          <input class="f-in" id="l-user" type="text" placeholder="SĐT hoặc Email">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Mật khẩu</label>
+          <input class="f-in" id="l-pass" type="password" placeholder="Vui lòng nhập mật khẩu" onkeydown="if(event.key==='Enter')doLogin()">
+          <span class="forgot-link" onclick="showForgotPasswordForm()">Quên mật khẩu?</span>
+        </div>
+        <button class="btn-main" onclick="doLogin()">Đăng nhập</button>
+        <div class="divider"><span>hoặc</span></div>
+        <button class="social-btn" onclick="doSocialLogin('Google')">
+          <span class="social-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20c11.045 0 20-8.955 20-20 0-1.341-.138-2.65-.389-3.917z"/>
+              <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+              <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+              <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 01-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+            </svg>
+          </span>
+          <span>Tiếp tục với Google</span>
+        </button>
+      </div>
+
+      <!-- Form đăng ký -->
+      <div id="register-panel" style="display:none">
+        <div class="f-row">
+          <div class="form-sec">
+            <label class="f-label">Họ</label>
+            <input class="f-in" id="r-first" type="text" placeholder="Nguyễn">
+          </div>
+          <div class="form-sec">
+            <label class="f-label">Tên</label>
+            <input class="f-in" id="r-last" type="text" placeholder="Văn A">
+          </div>
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Số điện thoại</label>
+          <input class="f-in" id="r-phone" type="text" placeholder="0912 345 678">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Email</label>
+          <input class="f-in" id="r-email" type="email" placeholder="email@gmail.com">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Mật khẩu</label>
+          <input class="f-in" id="r-pass" type="password" placeholder="Ít nhất 8 ký tự">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Nhập lại mật khẩu</label>
+          <input class="f-in" id="r-confirm" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()">
+        </div>
+        <button class="btn-main" onclick="doRegister()">Tạo tài khoản</button>
+      </div>
+
+      <!-- Form quên mật khẩu -->
+      <div id="forgot-panel" style="display:none">
+        <div class="form-sec">
+          <label class="f-label">Email đã đăng ký</label>
+          <input class="f-in" id="f-email" type="email" placeholder="yourname@gmail.com">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Mật khẩu mới</label>
+          <input class="f-in" id="f-pass" type="password" placeholder="Ít nhất 8 ký tự">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Nhập lại mật khẩu mới</label>
+          <input class="f-in" id="f-confirm" type="password" placeholder="••••••••">
+        </div>
+        <button class="btn-main" onclick="doForgotPassword()">Đặt lại mật khẩu</button>
+        <button class="btn-out" onclick="hideForgotPasswordForm()" style="margin-top:10px">Quay lại đăng nhập</button>
+      </div>
+
+      <div id="msg" class="msg"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════ PAGE: ADMIN ══════════════ -->
 <div id="page-admin" class="page">
   <div class="page-wrap">
-    <div id="admin-locked" style="display:none">
-      <div class="empty-state" style="padding:4rem 1rem">
-        <div class="empty-state-icon">🔐</div>
-        <h3>Admin chưa đăng nhập</h3>
-        <p>Vui lòng đăng nhập bằng tài khoản quản trị để mở bảng điều khiển</p>
-        <button class="btn-main" style="max-width:220px;margin:1rem auto 0" onclick="openModal('admin-login-modal')">Đăng nhập Admin</button>
+    <div id="admin-locked" style="display:none; justify-content:center; align-items:center; min-height:80vh; padding:2rem 1rem;">
+      <div class="auth-card" style="margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <div class="logo">
+          <div style="font-size:56px;margin-bottom:10px;">🛠️</div>
+          <h2>Quản trị viên</h2>
+          <p>Đăng nhập để vào bảng điều khiển Admin</p>
+        </div>
+        
+        <div class="form-sec" style="margin-top:20px;">
+          <label class="f-label">Tài khoản</label>
+          <input class="f-in" id="admin-user" type="text" placeholder="admin" value="admin">
+        </div>
+        <div class="form-sec">
+          <label class="f-label">Mật khẩu</label>
+          <input class="f-in" id="admin-pass" type="password" placeholder="admin123" value="admin123" onkeydown="if(event.key==='Enter')doAdminLogin()">
+        </div>
+        <button class="btn-main" onclick="doAdminLogin()">Đăng nhập Hệ thống</button>
+        <div id="admin-msg" class="msg" style="margin-top:10px;text-align:center;"></div>
       </div>
     </div>
     <div id="admin-dashboard" style="display:none">
@@ -458,7 +576,6 @@
                 <div class="sec-title">Tổng quan hôm nay</div>
                 <div style="font-size:12px;color:var(--muted)">Cập nhật lúc <span id="admin-now"></span></div>
               </div>
-              <button class="btn-main" style="width:auto;padding:10px 14px" onclick="openAdminItemModal()">➕ Thêm món</button>
             </div>
             <div class="admin-stats">
               <div class="admin-stat"><strong id="admin-stat-orders">0</strong><span>Đơn hôm nay</span></div>
@@ -565,16 +682,6 @@
      MODALS — Auth
      ═══════════════════════════════ -->
 
-<!-- Modal: Đăng nhập / Đăng ký (redirect) -->
-<div class="ov" id="login-modal" onclick="closeOvOutside(event,'login-modal')">
-  <div class="modal" style="padding:2rem;max-width:520px;text-align:center">
-    <button class="modal-close" onclick="closeModal('login-modal')">✕</button>
-    <div style="font-size:48px;margin-bottom:.75rem">🔐</div>
-    <h2 style="font-size:20px;font-weight:900;color:var(--brown);margin-bottom:.5rem">Đăng nhập / Đăng ký</h2>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Bạn sẽ được chuyển đến trang riêng để đăng nhập hoặc tạo tài khoản.</p>
-    <button class="btn-main" onclick="window.location.href='src/partials/auth.html'">Đi đến trang đăng nhập</button>
-  </div>
-</div>
 
 <!-- Modal: Đăng xuất -->
 <div class="ov" id="logout-modal" onclick="closeOvOutside(event,'logout-modal')">
@@ -595,19 +702,7 @@
      MODALS — Admin
      ═══════════════════════════════ -->
 
-<!-- Modal: Đăng nhập Admin -->
-<div class="ov" id="admin-login-modal" onclick="closeOvOutside(event,'admin-login-modal')">
-  <div class="modal" style="padding:2rem;max-width:420px">
-    <button class="modal-close" onclick="closeModal('admin-login-modal')">✕</button>
-    <div style="text-align:center;margin-bottom:1.5rem">
-      <div style="font-size:40px;margin-bottom:.5rem">🛠️</div>
-      <h2 style="font-size:22px;font-weight:900;color:var(--brown)">Đăng nhập Admin</h2>
-    </div>
-    <div class="form-sec"><label class="f-label">Tên đăng nhập</label><input class="f-in" id="admin-user" type="text" value="admin"></div>
-    <div class="form-sec" style="margin-top:1rem"><label class="f-label">Mật khẩu</label><input class="f-in" id="admin-pass" type="password" value="admin123"></div>
-    <button class="btn-main" style="margin-top:1rem" onclick="doAdminLogin()">Đăng nhập</button>
-  </div>
-</div>
+
 
 <!-- Modal: Thêm / sửa mã khuyến mãi -->
 <div class="ov" id="admin-promo-modal" onclick="closeOvOutside(event,'admin-promo-modal')">
@@ -863,6 +958,7 @@
 <script src="js/admin/admin-promos.js"></script>
 <script src="js/admin/admin-reports.js"></script>
 <!-- Auth -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="js/auth/auth.js"></script>
 <script src="js/auth/login.js"></script>
 <script src="js/auth/register.js"></script>

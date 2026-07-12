@@ -8,7 +8,6 @@ function doAdminLogin(){
   if(user==='admin' && pass==='admin123'){
     adminLoggedIn=true;
     localStorage.setItem('pgd_admin_logged_in', '1');
-    closeModal('admin-login-modal');
     showToast('✅ Đăng nhập Admin thành công',true);
     updateAdminUI();
   } else {

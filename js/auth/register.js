@@ -9,8 +9,16 @@ function doRegister() {
   const confirm = (document.getElementById('r-confirm') || {}).value;
   const msg     = document.getElementById('msg');
 
-  if (!first || !last || !phone || !pass) {
+  if (!first || !last || !phone || !pass || !email) {
     if (msg) { msg.textContent = '⚠️ Vui lòng điền đầy đủ thông tin bắt buộc'; msg.className = 'msg err'; }
+    return;
+  }
+  if (!/^0\d{9}$/.test(phone)) {
+    if (msg) { msg.textContent = '⚠️ Số điện thoại phải gồm 10 chữ số và bắt đầu bằng số 0'; msg.className = 'msg err'; }
+    return;
+  }
+  if (!email.toLowerCase().endsWith('@gmail.com')) {
+    if (msg) { msg.textContent = '⚠️ Email bắt buộc phải có đuôi @gmail.com'; msg.className = 'msg err'; }
     return;
   }
   if (pass.length < 8) {
