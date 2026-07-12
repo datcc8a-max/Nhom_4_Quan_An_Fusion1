@@ -5,6 +5,8 @@
 
 **Website đặt món ăn trực tuyến hiện đại | Modern Food Ordering Web App**
 
+🚀 **[XEM DEMO TRỰC TUYẾN TẠI ĐÂY](https://datcc8a-max.github.io/Nhom_3_Quan_An_Fusion/)** 🚀
+
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -35,8 +37,9 @@ Dự án mô phỏng đầy đủ quy trình đặt món của một nhà hàng 
 | 🛒 **Giỏ hàng** | Thêm/xóa/thay đổi số lượng, chọn size, thêm topping, dropdown nhanh |
 | 🏷️ **Mã khuyến mãi** | Nhập mã giảm giá, freeship, xem danh sách mã khả dụng |
 | 💳 **Thanh toán đa dạng** | COD, MoMo, ZaloPay, VNPay, Visa/Mastercard, Chuyển khoản MB Bank |
+| ⚡ **Thanh toán thông minh** | Tự động điền (auto-fill) thông tin khách hàng vào form đặt hàng |
 | 📱 **QR Thanh toán** | Tự động tạo mã QR, đồng hồ đếm ngược 15 phút chờ thanh toán |
-| 📦 **Quản lý đơn hàng** | Xem lịch sử đơn, lọc theo trạng thái, hủy đơn, đặt lại, đánh giá |
+| 📦 **Quản lý đơn hàng** | Xem lịch sử đơn, theo dõi Shipper, lọc trạng thái, hủy đơn, đặt lại, đánh giá |
 | ⭐ **Đánh giá món** | Chấm sao và nhận xét từng món trong đơn hàng đã hoàn thành |
 | 👨‍💼 **Hồ sơ cá nhân** | Cập nhật thông tin, đổi mật khẩu, quản lý địa chỉ, xem điểm tích lũy |
 | 💬 **Chat hỗ trợ** | Widget chat bot trả lời tự động các câu hỏi thường gặp |
@@ -53,8 +56,8 @@ Dự án mô phỏng đầy đủ quy trình đặt món của một nhà hàng 
 | Tính năng | Mô tả |
 |-----------|-------|
 | 📊 **Dashboard** | Thống kê tổng quan: doanh thu, đơn hàng, top món bán chạy |
-| 📋 **Quản lý đơn hàng** | Xem, lọc, cập nhật trạng thái, phân shipper, xuất CSV |
-| 🍽️ **Quản lý thực đơn** | Thêm/sửa/xóa món ăn, upload ảnh |
+| 📋 **Quản lý đơn hàng** | Xem, lọc, cập nhật trạng thái, phân shipper, theo dõi thông tin shipper, xuất CSV |
+| 🍽️ **Quản lý thực đơn** | Thêm/sửa/xóa món ăn, hỗ trợ tải ảnh trực tiếp từ máy tính (mã hoá Base64) kèm preview |
 | 🏷️ **Quản lý khuyến mãi** | Tạo, bật/tắt, xóa mã giảm giá |
 | 📈 **Báo cáo doanh thu** | Thống kê theo trạng thái, top sản phẩm bán chạy |
 
@@ -139,8 +142,9 @@ Quán Ăn Fusion/
 3. Double-click vào file index.html
 4. Trang web chạy ngay trên trình duyệt!
 ```
+> ⚠️ **LƯU Ý:** Cách này KHÔNG hỗ trợ tính năng **Đăng nhập Google/Facebook**. Trình duyệt sẽ chặn popup nếu mở bằng file trực tiếp.
 
-### Cách 2: Chạy qua Local Server (khuyến nghị)
+### Cách 2: Chạy qua Local Server (Bắt buộc để Đăng nhập Google hoạt động)
 ```bash
 # Dùng Python
 cd "Quán Ăn Fusion"
