@@ -59,18 +59,28 @@ function openAdminItemModal(id){
   const badge=document.getElementById('admin-item-badge');
   const desc=document.getElementById('admin-item-desc');
   const toppings=document.getElementById('admin-item-toppings');
+  const imgFile=document.getElementById('admin-item-img-file');
+  const imgPreview=document.getElementById('admin-item-img-preview');
+  const imgPreviewTag=document.getElementById('admin-item-img-preview-tag');
+
+  if(imgFile) imgFile.value = ''; // Reset file input
+
   if(adminEditingItemId){
     const item=(window.MENU||[]).find(i=>i.id===adminEditingItemId);
     if(!item) return;
-    title.textContent='Sửa món';
+    title.textContent='Sửa món ăn';
     name.value=item.name;
     cat.value=item.cat;
     price.value=item.price;
     old.value=item.oldPrice||'';
     img.value=item.img;
     badge.value=item.badge||'';
-    desc.value=item.desc;
+    desc.value=item.desc||'';
     toppings.value=(item.toppings||[]).join(',');
+    if(imgPreview && imgPreviewTag) {
+      imgPreviewTag.src = item.img || '';
+      imgPreview.style.display = item.img ? 'block' : 'none';
+    }
   } else {
     title.textContent='Thêm món mới';
     name.value='';
@@ -81,9 +91,29 @@ function openAdminItemModal(id){
     badge.value='';
     desc.value='';
     toppings.value='';
+    if(imgPreview) imgPreview.style.display = 'none';
   }
   openModal('admin-item-modal');
 }
+
+window.handleAdminItemImgUpload = function(event) {
+  const file = event.target.files[0];
+  if(!file) return;
+  if(file.size > 500 * 1024) {
+    showToast('⚠️ Vui lòng chọn ảnh nhỏ hơn 500KB để tránh đầy bộ nhớ', '', 'err');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    const imgInput = document.getElementById('admin-item-img');
+    if(imgInput) {
+      imgInput.value = base64;
+      imgInput.dispatchEvent(new Event('input')); // Trigger preview
+    }
+  };
+  reader.readAsDataURL(file);
+};
 
 function saveAdminItem(){
   const name=document.getElementById('admin-item-name').value.trim();
