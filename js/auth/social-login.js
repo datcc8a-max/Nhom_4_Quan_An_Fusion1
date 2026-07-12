@@ -1,53 +1,75 @@
 // ── AUTH/social-login.js - Đăng nhập mạng xã hội ──
 
-let socialPopup = null;
-let socialInterval = null;
+let googleClient = null;
+
+function initGoogleClient() {
+  if (typeof google === 'undefined' || !google.accounts) {
+    console.error('Google SDK chưa được tải.');
+    return;
+  }
+  
+  // Khởi tạo Token Client của Google
+  googleClient = google.accounts.oauth2.initTokenClient({
+    client_id: '580681070451-qb81c30t3qccjh8oi413hj41u11io8f2.apps.googleusercontent.com',
+    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+    callback: (tokenResponse) => {
+      if (tokenResponse && tokenResponse.access_token) {
+        const msg = document.getElementById('msg');
+        if (msg) { 
+          msg.textContent = `⏳ Đang lấy thông tin từ Google…`; 
+          msg.className = 'msg'; 
+        }
+        
+        // Dùng Access Token để lấy thông tin user
+        fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+        })
+        .then(res => res.json())
+        .then(data => {
+          // data chứa email, name, picture...
+          window.completeSocialLogin('Google', data.email, data.name, data.picture);
+        })
+        .catch(err => {
+          console.error(err);
+          if (msg) { 
+            msg.textContent = `❌ Lỗi lấy thông tin Google.`; 
+            msg.className = 'msg err'; 
+          }
+        });
+      }
+    },
+  });
+}
 
 function doSocialLogin(provider) {
   const msg = document.getElementById('msg');
-  if (msg) { 
-    msg.textContent = `⏳ Đang mở cửa sổ bảo mật của ${provider}…`; 
-    msg.className = 'msg'; 
-  }
 
-  // URL của trang mock - tính từ auth.html ở src/partials/
-  const popupUrl = provider === 'Google' ? 'mock-google.html' : 'mock-facebook.html';
-  
-  const w = 450, h = 600;
-  const left = (screen.width/2)-(w/2);
-  const top = (screen.height/2)-(h/2);
-
-  localStorage.removeItem('social_login_pending');
-
-  socialPopup = window.open(popupUrl, 'oauth', `toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=${w},height=${h},top=${top},left=${left}`);
-  
-  if (socialPopup && window.focus) socialPopup.focus();
-
-  if (!socialPopup || socialPopup.closed || typeof socialPopup.closed === 'undefined') { 
-    alert('Trình duyệt của bạn đã chặn cửa sổ Pop-up. Vui lòng cho phép Pop-up để đăng nhập bằng ' + provider + '.');
-    return;
-  }
-
-  if (socialInterval) clearInterval(socialInterval);
-  socialInterval = setInterval(() => {
-    if (socialPopup && socialPopup.closed && !localStorage.getItem('social_login_pending')) {
-      clearInterval(socialInterval);
-      if (msg) { msg.textContent = 'Đã đóng cửa sổ.'; msg.className = 'msg'; }
+  if (provider === 'Google') {
+    if (!googleClient) {
+      initGoogleClient();
     }
-    
-    const pending = localStorage.getItem('social_login_pending');
-    if (pending) {
-      clearInterval(socialInterval);
-      localStorage.removeItem('social_login_pending');
-      try {
-        const data = JSON.parse(pending);
-        window.completeSocialLogin(data.provider, data.email);
-      } catch(e) {}
+    if (googleClient) {
+      if (msg) { 
+        msg.textContent = `⏳ Đang kết nối Google…`; 
+        msg.className = 'msg'; 
+      }
+      googleClient.requestAccessToken();
+    } else {
+      if (msg) { 
+        msg.textContent = `❌ Lỗi: Chưa tải được thư viện Google.`; 
+        msg.className = 'msg err'; 
+      }
     }
-  }, 500);
+  } else {
+    // Tạm thời báo lỗi nếu chọn nền tảng khác (ví dụ Facebook)
+    if (msg) { 
+      msg.textContent = `❌ Đăng nhập ${provider} đang được bảo trì.`; 
+      msg.className = 'msg err'; 
+    }
+  }
 }
 
-window.completeSocialLogin = function(provider, email) {
+window.completeSocialLogin = function(provider, email, name, avatar) {
   const msg = document.getElementById('msg');
   if (msg) { 
     msg.textContent = `✅ Xác thực ${provider} thành công! Đang chuyển…`; 
@@ -57,31 +79,37 @@ window.completeSocialLogin = function(provider, email) {
   const username = email ? email.split('@')[0] : 'user';
 
   const mockUser = {
-    id: Date.now(),
-    firstName: username,
+    id: 'social-' + Date.now(),
+    firstName: name || username,
     lastName: '',
     phone: '',
     email: email || `${provider.toLowerCase()}user@demo.vn`,
-    password: '',
+    password: 'social-login',
     username: username,
     provider: provider,
+    avatar: avatar || '',
     points: 0,
     createdAt: new Date().toISOString(),
   };
 
   const users = storageGet(STORAGE_KEYS.USERS, []);
-  const existing = users.find(u => u.email === mockUser.email);
-  const finalUser = existing || mockUser;
+  // Tìm user dựa theo email
+  const existingIndex = users.findIndex(u => u.email === mockUser.email);
   
-  if (!existing) { 
-    users.push(finalUser); 
-    storageSet(STORAGE_KEYS.USERS, users); 
+  if (existingIndex >= 0) {
+    // Cập nhật thông tin avatar/name mới nhất
+    if(avatar) users[existingIndex].avatar = avatar;
+    if(name && !users[existingIndex].firstName) users[existingIndex].firstName = name;
+    storageSet(STORAGE_KEYS.USERS, users);
+    storageSet(STORAGE_KEYS.CURRENT_USER, users[existingIndex]);
+  } else {
+    users.push(mockUser);
+    storageSet(STORAGE_KEYS.USERS, users);
+    storageSet(STORAGE_KEYS.CURRENT_USER, mockUser);
   }
-  
-  storageSet(STORAGE_KEYS.CURRENT_USER, finalUser);
 
-  // Quay lại trang index.html
-  setTimeout(() => { window.history.back(); }, 800);
+  // Quay lại trang chủ sau 1 giây
+  setTimeout(() => { window.location.href = '../../index.html'; }, 1000);
 };
 
 window.doSocialLogin = doSocialLogin;
