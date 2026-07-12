@@ -61,11 +61,7 @@
       <input type="text" placeholder="Tìm phở, cơm, bánh mì…" id="search-input" autocomplete="off">
     </div>
 
-    <!-- Vị trí giao hàng -->
-    <button class="header-loc" id="header-loc-btn" onclick="requestUserLocation()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span id="header-loc-text">Giao đến tôi</span>
-    </button>
+    <!-- Vị trí giao hàng đã bị xóa theo yêu cầu -->
 
     <!-- Navigation -->
     <nav>
@@ -653,7 +649,20 @@
       </div>
       <div class="form-sec"><label class="f-label">Giá</label><input class="f-in" id="admin-item-price" type="number"></div>
       <div class="form-sec"><label class="f-label">Giá cũ</label><input class="f-in" id="admin-item-old" type="number" placeholder="(không bắt buộc)"></div>
-      <div class="form-sec"><label class="f-label">Ảnh URL</label><input class="f-in" id="admin-item-img" type="text" placeholder="https://..."></div>
+      <div class="form-sec" style="grid-column:1/-1">
+        <label class="f-label">Ảnh món ăn (Chọn từ máy tính hoặc nhập URL)</label>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
+          <input class="f-in" id="admin-item-img" type="text" placeholder="URL ảnh (https://...)" style="flex:1" oninput="document.getElementById('admin-item-img-preview-tag').src = this.value; document.getElementById('admin-item-img-preview').style.display = this.value ? 'block' : 'none';">
+          <span style="font-size:13px;color:var(--muted)">hoặc</span>
+          <label class="btn-main" style="cursor:pointer;padding:8px 16px;font-size:13px;display:inline-block;white-space:nowrap;margin:0">
+            📂 Chọn ảnh
+            <input type="file" id="admin-item-img-file" accept="image/*" style="display:none" onchange="handleAdminItemImgUpload(event)">
+          </label>
+        </div>
+        <div id="admin-item-img-preview" style="display:none">
+          <img id="admin-item-img-preview-tag" src="" style="max-height:80px;border-radius:6px;border:1px solid var(--border);object-fit:cover">
+        </div>
+      </div>
       <div class="form-sec"><label class="f-label">Badge</label>
         <select class="admin-select" id="admin-item-badge">
           <option value="">Không có</option>
@@ -845,12 +854,12 @@
 <script src="js/features/menu.js"></script>
 <script src="js/features/cart.js"></script>
 <script src="js/features/checkout.js?v=3"></script>
-<script src="js/features/orders.js"></script>
-<script src="js/features/profile.js"></script>
+<script src="js/features/orders.js?v=2"></script>
+<script src="js/features/profile.js?v=2"></script>
 <!-- Admin -->
 <script src="js/admin/admin-core.js"></script>
-<script src="js/admin/admin-orders.js"></script>
-<script src="js/admin/admin-items.js"></script>
+<script src="js/admin/admin-orders.js?v=2"></script>
+<script src="js/admin/admin-items.js?v=2"></script>
 <script src="js/admin/admin-promos.js"></script>
 <script src="js/admin/admin-reports.js"></script>
 <!-- Auth -->

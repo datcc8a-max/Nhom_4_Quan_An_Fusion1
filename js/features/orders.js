@@ -33,6 +33,12 @@ function renderOrders(){
         ${(o.thumbs||[]).map(img=>`<div class="oc-thumb"><img src="${img}" alt=""></div>`).join('')}
         <div style="flex-shrink:0;font-size:12px;color:var(--muted);align-self:center;padding-left:4px">${o.items}</div>
       </div>
+      ${(o.shipper || o.shipperPhone) ? `
+      <div style="font-size:13px;color:var(--text);margin:0 1rem;padding:8px 12px;background:var(--surf2);border-radius:6px;border:1px dashed var(--border)">
+        <span style="display:block;font-weight:600;margin-bottom:2px;color:var(--brown)">🛵 Đơn vị vận chuyển:</span>
+        <span style="font-weight:500">${o.shipper || 'Shipper'}</span> 
+        ${o.shipperPhone ? `- 📞 <a href="tel:${o.shipperPhone}" style="color:var(--primary);text-decoration:none;font-weight:600">${o.shipperPhone}</a>` : ''}
+      </div>` : ''}
       <div class="oc-bot">
         <div class="oc-total">${fmt(o.total)}</div>
         <div class="oc-actions">
