@@ -10,7 +10,7 @@
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/datcc8a-max/Nhom-4-Quan-an-Fusion)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/datcc8a-max/Nhom_3_Quan_An_Fusion)
 
 </div>
 
@@ -18,11 +18,11 @@
 
 ## 📖 Giới Thiệu
 
-**Quán Ăn Fusion** là website đặt món ăn trực tuyến được xây dựng hoàn toàn bằng **HTML/CSS/JavaScript thuần** (Vanilla) — không cần backend, không cần cài đặt, chạy trực tiếp trên trình duyệt.
+**Quán Ăn Fusion** là website đặt món ăn trực tuyến được xây dựng hoàn toàn bằng **HTML/CSS/JavaScript** — không cần backend, không cần cài đặt, chạy trực tiếp trên trình duyệt.
 
 Dự án mô phỏng đầy đủ quy trình đặt món của một nhà hàng thực tế: từ xem thực đơn, thêm vào giỏ hàng, thanh toán, theo dõi đơn hàng cho đến trang quản trị admin.
 
-> 📌 **Đây là đồ án môn học** — Nhóm 4, được phát triển bởi 3 thành viên làm việc song song trên cùng một codebase mà không bị conflict.
+> 📌 **Đây là đồ án môn học** — Nhóm 3, được phát triển bởi 3 thành viên làm việc song song trên cùng một codebase mà không bị conflict.
 
 ---
 
@@ -49,8 +49,7 @@ Dự án mô phỏng đầy đủ quy trình đặt món của một nhà hàng 
 |-----------|-------|
 | 📧 **Đăng nhập / Đăng ký** | Form đầy đủ validation, lưu trữ localStorage |
 | 🔑 **Quên mật khẩu** | Đặt lại mật khẩu qua email |
-| 🌐 **Đăng nhập Google** | Mô phỏng OAuth Google với popup đẹp |
-| 📘 **Đăng nhập Facebook** | Mô phỏng OAuth Facebook với popup đẹp |
+| 🌐 **Đăng nhập Google** | Tích hợp xác thực tài khoản thật bằng Google Identity Services (GSI) |
 
 ### 🛡️ Dành cho Admin (Tài khoản: `admin` / `admin123`)
 | Tính năng | Mô tả |
@@ -73,7 +72,7 @@ Dự án mô phỏng đầy đủ quy trình đặt món của một nhà hàng 
 | **Đơn hàng** | Timeline trạng thái, danh sách đơn hàng, lịch sử |
 | **Hồ sơ** | Thông tin cá nhân, điểm thưởng, địa chỉ, thông báo |
 | **Admin Panel** | Dashboard, quản lý orders/items/promos/reports |
-| **Trang đăng nhập** | Trang riêng đẹp với social login |
+| **Trang đăng nhập** | Trang riêng đẹp với tính năng đăng nhập Google |
 
 ---
 
@@ -84,10 +83,12 @@ Quán Ăn Fusion/
 │
 ├── 📄 index.html                    ← Trang chính duy nhất
 │
-├── 📁 src/partials/                 ← Các trang HTML riêng
+├── 📁 src/partials/                 ← Các thành phần giao diện (để tham khảo/lắp ráp)
+│   ├── 01-head.html                 ← Head & Meta tags
+│   ├── 02-header.html               ← Header & Navigation
+│   ├── 03-hero.html                 ...
 │   ├── auth.html                    ← Trang đăng nhập / đăng ký
-│   ├── mock-google.html             ← Popup giả lập Google OAuth
-│   └── mock-facebook.html           ← Popup giả lập Facebook OAuth
+│   └── (các file HTML thành phần khác)
 │
 ├── 📁 css/
 │   ├── base/                        ← reset, variables, typography, animations
@@ -125,7 +126,7 @@ Quán Ăn Fusion/
 │       ├── login.js                 ← Đăng nhập
 │       ├── register.js              ← Đăng ký
 │       ├── forgot-password.js       ← Quên mật khẩu
-│       ├── social-login.js          ← Google / Facebook OAuth
+│       ├── social-login.js          ← Google OAuth
 │       └── auth-bridge.js           ← Cầu nối auth
 │
 └── 📁 images/                       ← Logo, ảnh món ăn, icons thanh toán
@@ -135,29 +136,26 @@ Quán Ăn Fusion/
 
 ## 🚀 Hướng Dẫn Chạy
 
-### Cách 1: Chạy trực tiếp (đơn giản nhất)
+### Cách 1: Dùng VS Code Live Server (Khuyên dùng nhất)
+```text
+1. Mở thư mục dự án (Nhom_3_Quan_An_Fusion) bằng Visual Studio Code.
+2. Cài đặt tiện ích mở rộng "Live Server" trong VS Code.
+3. Nhấp chuột phải vào file index.html và chọn "Open with Live Server".
+4. Trang web sẽ tự động mở ở địa chỉ http://127.0.0.1:5500
 ```
-1. Clone hoặc tải repo về máy
-2. Mở thư mục dự án
-3. Double-click vào file index.html
-4. Trang web chạy ngay trên trình duyệt!
+> 💡 **Lợi ích:** Đảm bảo tính năng **Đăng nhập Google** hoạt động trơn tru (tránh được lỗi bảo mật CORS) và tự động làm mới trang web mỗi khi bạn lưu code.
+
+### Cách 2: Chạy trực tiếp (Nhanh nhưng bị hạn chế)
+```text
+1. Mở thư mục dự án.
+2. Nhấp đúp chuột (double-click) vào file index.html.
+3. Trang web chạy ngay trên trình duyệt của bạn!
 ```
-> ⚠️ **LƯU Ý:** Cách này KHÔNG hỗ trợ tính năng **Đăng nhập Google/Facebook**. Trình duyệt sẽ chặn popup nếu mở bằng file trực tiếp.
-
-### Cách 2: Chạy qua Local Server (Bắt buộc để Đăng nhập Google hoạt động)
-```bash
-# Dùng Python
-cd "Quán Ăn Fusion"
-python -m http.server 8787
-
-# Mở trình duyệt → http://localhost:8787
-```
-
-> ⚠️ Một số tính năng (popup OAuth) cần chạy qua server. Khuyến nghị dùng **Cách 2**.
+> ⚠️ **LƯU Ý:** Cách này KHÔNG hỗ trợ tính năng **Đăng nhập Google**. Trình duyệt sẽ tự động chặn các luồng xác thực (popup) nếu bạn mở file tĩnh trực tiếp.
 
 ---
 
-## 👥 Thành Viên Nhóm 4
+## 👥 Thành Viên Nhóm 3
 
 | Thành viên | Vai trò | Nhánh GitHub | Phụ trách |
 |------------|---------|--------------|-----------|
@@ -173,14 +171,16 @@ python -m http.server 8787
 |------|-----------|----------|
 | **Demo User** | `demo@phogiadinh.vn` | `12345678` |
 | **Admin** | `admin` | `admin123` |
-| **Google/Facebook** | Dùng nút đăng nhập xã hội, nhập email bất kỳ | — |
+| **Google** | Dùng nút đăng nhập bằng Google, nhập email bất kỳ | — |
 
 ### Mã Khuyến Mãi Test
 | Mã | Giảm giá |
 |----|---------|
+| `PHOGIA20` | Giảm 20.000đ |
 | `WELCOME10` | Giảm 10% |
-| `SUMMER20` | Giảm 20% |
+| `SALE50K` | Giảm 50.000đ |
 | `FREESHIP` | Miễn phí giao hàng |
+| `NEWUSER` | Giảm 15% |
 
 ---
 
